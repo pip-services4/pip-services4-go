@@ -10,6 +10,7 @@ import (
 // between microservices implemented in different languages.
 // They allow to restore exceptions on the receiving side close to
 // the original type and preserve additional information.
+//
 //	see ErrorDescription
 //	see ApplicationError
 var ErrorDescriptionFactory = &_TErrorDescriptionFactory{}
@@ -17,6 +18,7 @@ var ErrorDescriptionFactory = &_TErrorDescriptionFactory{}
 type _TErrorDescriptionFactory struct{}
 
 // Create creates a serializable ErrorDescription from error object.
+//
 //	Parameters: err error an error object
 //	Returns: *ErrorDescription a serializeable ErrorDescription object that describes the error.
 func (c *_TErrorDescriptionFactory) Create(err any) *ErrorDescription {
@@ -24,6 +26,7 @@ func (c *_TErrorDescriptionFactory) Create(err any) *ErrorDescription {
 }
 
 // NewErrorDescription creates a serializable ErrorDescription from error object.
+//
 //	Parameters: err any an error object
 //	Returns: *ErrorDescription a serializeable ErrorDescription object that describes the error.
 func NewErrorDescription(err any) *ErrorDescription {
@@ -40,7 +43,7 @@ func NewErrorDescription(err any) *ErrorDescription {
 		description.Code = ex.Code
 		description.Message = ex.Message
 		description.Details = ex.Details
-		description.CorrelationId = ex.CorrelationId
+		description.TraceId = ex.TraceId
 		description.Cause = ex.Cause
 		description.StackTrace = ex.StackTrace
 	} else if err != nil {

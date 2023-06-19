@@ -82,13 +82,13 @@ func (c *MyComponentA) IsOpen() bool {
 	return c.opened
 }
 
-func (c *MyComponentA) Open(ctx context.Context, correlationId string) error {
+func (c *MyComponentA) Open(ctx context.Context) error {
 	c.opened = true
 	fmt.Println("MyComponentA has been opened.")
 	return nil
 }
 
-func (c *MyComponentA) Close(ctx context.Context, correlationId string) error {
+func (c *MyComponentA) Close(ctx context.Context) error {
 	c.opened = false
 	fmt.Println("MyComponentA has been closed.")
 	return nil

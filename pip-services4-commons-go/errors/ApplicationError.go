@@ -23,7 +23,7 @@ package errors
 //	category: one of 12 standard error categories of errors
 //	status: numeric HTTP status code for REST invocations
 //	code: a unique error code, usually defined as "MY_ERROR_CODE"
-//	correlation_id: a unique transaction id to trace execution through a call chain
+//	trace_id: a unique transaction id to trace execution through a call chain
 //	details: map with error parameters that can help to recreate meaningful error description in other languages
 //	stack_trace: a stack trace
 //	cause: original error that is wrapped by this exception
@@ -34,14 +34,14 @@ package errors
 //	see ErrorCategory
 //	see ErrorDescription
 type ApplicationError struct {
-	Message       string         `json:"message"`
-	Category      string         `json:"category"`
-	Status        int            `json:"status"`
-	Code          string         `json:"code"`
-	Details       map[string]any `json:"details"`
-	CorrelationId string         `json:"correlation_id"`
-	StackTrace    string         `json:"stack_trace"`
-	Cause         string         `json:"cause"`
+	Message    string         `json:"message"`
+	Category   string         `json:"category"`
+	Status     int            `json:"status"`
+	Code       string         `json:"code"`
+	Details    map[string]any `json:"details"`
+	TraceId    string         `json:"trace_id"`
+	StackTrace string         `json:"stack_trace"`
+	Cause      string         `json:"cause"`
 }
 
 // Error return string error message
@@ -94,11 +94,11 @@ func (e *ApplicationError) WithCauseString(cause string) *ApplicationError {
 	return e
 }
 
-// WithCorrelationId add Correlation Id to ApplicationError
-//	Parameters: correlationId string a correlation string
+// WithTraceId add trace Id to ApplicationError
+//	Parameters: traceId string a trace id string
 //	Returns: *ApplicationError
-func (e *ApplicationError) WithCorrelationId(correlationId string) *ApplicationError {
-	e.CorrelationId = correlationId
+func (e *ApplicationError) WithTraceId(traceId string) *ApplicationError {
+	e.TraceId = traceId
 	return e
 }
 

@@ -6,16 +6,16 @@ package errors
 // NewConflictError creates an error instance and assigns its values.
 //	see ErrorCategory
 //	Parameters:
-//		- correlation_id string a unique transaction id to trace execution through call chain.
+//		- traceId string a unique transaction id to trace execution through call chain.
 //		- code string a unique error code.
 //		- message string a human-readable description of the error.
 //	Returns: *ApplicationError
-func NewConflictError(correlationId, code, message string) *ApplicationError {
+func NewConflictError(traceId, code, message string) *ApplicationError {
 	return &ApplicationError{
-		Category:      Conflict,
-		CorrelationId: correlationId,
-		Code:          code,
-		Message:       message,
-		Status:        409,
+		Category: Conflict,
+		TraceId:  traceId,
+		Code:     code,
+		Message:  message,
+		Status:   409,
 	}
 }

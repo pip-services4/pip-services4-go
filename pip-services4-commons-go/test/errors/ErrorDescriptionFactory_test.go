@@ -14,7 +14,7 @@ func TestCreateFromApplicationError(t *testing.T) {
 	d := cerrors.ErrorDescriptionFactory.Create(err)
 
 	assert.Equal(t, cerrors.Internal, d.Category)
-	assert.Equal(t, "123", d.CorrelationId)
+	assert.Equal(t, "123", d.TraceId)
 	assert.Equal(t, "CODE", d.Code)
 	assert.Equal(t, "Error message", d.Message)
 	assert.Equal(t, 500, d.Status)
@@ -26,7 +26,7 @@ func TestCreateFromError(t *testing.T) {
 	d := cerrors.ErrorDescriptionFactory.Create(err)
 
 	assert.Equal(t, cerrors.Unknown, d.Category)
-	assert.Equal(t, "", d.CorrelationId)
+	assert.Equal(t, "", d.TraceId)
 	assert.Equal(t, "UNKNOWN", d.Code)
 	assert.Equal(t, "Message", d.Message)
 	assert.Equal(t, 500, d.Status)
@@ -36,7 +36,7 @@ func TestCreateFromString(t *testing.T) {
 	d := cerrors.ErrorDescriptionFactory.Create("Message")
 
 	assert.Equal(t, cerrors.Unknown, d.Category)
-	assert.Equal(t, "", d.CorrelationId)
+	assert.Equal(t, "", d.TraceId)
 	assert.Equal(t, "UNKNOWN", d.Code)
 	assert.Equal(t, "Message", d.Message)
 	assert.Equal(t, 500, d.Status)

@@ -28,48 +28,48 @@ func NewErrorFromDescription(description *ErrorDescription) *ApplicationError {
 	category := description.Category
 	code := description.Code
 	message := description.Message
-	correlationId := description.CorrelationId
+	traceId := description.TraceId
 
 	// Create well-known exception type based on error category
 	switch category {
 	case Unknown:
-		err = NewUnknownError(correlationId, code, message)
+		err = NewUnknownError(traceId, code, message)
 		break
 	case Internal:
-		err = NewInternalError(correlationId, code, message)
+		err = NewInternalError(traceId, code, message)
 		break
 	case Misconfiguration:
-		err = NewConfigError(correlationId, code, message)
+		err = NewConfigError(traceId, code, message)
 		break
 	case NoResponse:
-		err = NewConnectionError(correlationId, code, message)
+		err = NewConnectionError(traceId, code, message)
 		break
 	case FailedInvocation:
-		err = NewInvocationError(correlationId, code, message)
+		err = NewInvocationError(traceId, code, message)
 		break
 	case FileError:
-		err = NewFileError(correlationId, code, message)
+		err = NewFileError(traceId, code, message)
 		break
 	case BadRequest:
-		err = NewBadRequestError(correlationId, code, message)
+		err = NewBadRequestError(traceId, code, message)
 		break
 	case Unauthorized:
-		err = NewUnauthorizedError(correlationId, code, message)
+		err = NewUnauthorizedError(traceId, code, message)
 		break
 	case Conflict:
-		err = NewConflictError(correlationId, code, message)
+		err = NewConflictError(traceId, code, message)
 		break
 	case NotFound:
-		err = NewNotFoundError(correlationId, code, message)
+		err = NewNotFoundError(traceId, code, message)
 		break
 	case InvalidState:
-		err = NewInvalidStateError(correlationId, code, message)
+		err = NewInvalidStateError(traceId, code, message)
 		break
 	case Unsupported:
-		err = NewUnsupportedError(correlationId, code, message)
+		err = NewUnsupportedError(traceId, code, message)
 		break
 	default:
-		err = NewUnknownError(correlationId, code, message)
+		err = NewUnknownError(traceId, code, message)
 		err.Category = category
 		err.Status = description.Status
 	}

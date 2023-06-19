@@ -23,10 +23,10 @@ func TestWithCause(t *testing.T) {
 	assert.Equal(t, cause.Error(), err.Cause)
 }
 
-func TestWithCorrelationId(t *testing.T) {
-	err := cerrors.NewError("").WithCorrelationId("123")
+func TestWithTraceId(t *testing.T) {
+	err := cerrors.NewError("").WithTraceId("123")
 
-	assert.Equal(t, "123", err.CorrelationId)
+	assert.Equal(t, "123", err.TraceId)
 }
 
 func TestWithStatus(t *testing.T) {
