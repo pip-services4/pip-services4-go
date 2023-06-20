@@ -142,7 +142,7 @@ func (c *ConnectionResolver) resolveInDiscovery(ctx context.Context,
 //
 //	see IDiscovery
 //	Parameters:
-//		- correlationId: string transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //	Returns: *ConnectionParams, error resolved connection or error.
 func (c *ConnectionResolver) Resolve(ctx context.Context) (*ConnectionParams, error) {
 	if len(c.connections) == 0 {

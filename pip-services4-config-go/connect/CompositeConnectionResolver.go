@@ -106,7 +106,7 @@ func (c *CompositeConnectionResolver) SetReferences(ctx context.Context, referen
 }
 
 // Resolve connection options from connection and credential parameters.
-//   - correlationId     (optional) transaction id to trace execution through call chain.
+//   - ctx context.Context execution context to trace execution through call chain.
 //   - return 			 resolved options or error.
 func (c *CompositeConnectionResolver) Resolve(ctx context.Context) (options *config.ConfigParams, err error) {
 	var connections []*ConnectionParams
@@ -156,7 +156,7 @@ func (c *CompositeConnectionResolver) Resolve(ctx context.Context) (options *con
 // Compose Composite connection options from connection and credential parameters.
 //
 //	Parameters:
-//		- correlationId (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- connections connection parameters
 //		- credential parameters
 //		- parameters optional parameters
@@ -231,7 +231,7 @@ func (c *CompositeConnectionResolver) ValidateConnection(ctx context.Context, co
 // This method can be override in child classes.
 //
 //	Parameters:
-//		- correlationId (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- credential    parameters to be validated
 //	Returns: error or nil if validation was successful
 func (c *CompositeConnectionResolver) ValidateCredential(ctx context.Context, credential *auth.CredentialParams) error {

@@ -110,7 +110,7 @@ func (c *MemoryDiscovery) Register(ctx context.Context, key string,
 // ResolveOne a single connection parameters by its key.
 //
 //	Parameters:
-//		- correlationId: string transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- key: string a key to uniquely identify the connection.
 //	Returns: *ConnectionParams, error receives found connection or error.
 func (c *MemoryDiscovery) ResolveOne(ctx context.Context,
@@ -127,7 +127,7 @@ func (c *MemoryDiscovery) ResolveOne(ctx context.Context,
 // ResolveAll connection parameters by its key.
 //
 //	Parameters:
-//		- correlationId: string transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- key: string a key to uniquely identify the connection.
 //	Returns: *ConnectionParams, error receives found connection or error.
 func (c *MemoryDiscovery) ResolveAll(ctx context.Context,
