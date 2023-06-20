@@ -139,7 +139,7 @@ func main() {
 ## Develop
 
 For development you shall install the following prerequisites:
-* Golang v1.18+
+* Golang v1.20+
 * Visual Studio Code or another IDE of your choice
 * Docker
 * Git

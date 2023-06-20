@@ -1,10 +1,10 @@
 {
-  "name":  "pip-services4-components-gox",
+  "name":  "pip-services3-expressions-gox",
   "type": "module",
   "language": "go",
   "version": "0.0.1",
   "build": 0,
-  "registry": "pipservices",
+  "registry": "pipdevs",
   "artifacts": [
   ]
 }
