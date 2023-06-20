@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/util"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 // NewReferenceError Creates an error instance and assigns its values.
@@ -18,7 +18,7 @@ import (
 //	Returns *errors.ApplicationError
 func NewReferenceError(ctx context.Context, locator any) *errors.ApplicationError {
 	message := fmt.Sprintf("Failed to obtain reference to %v", locator)
-	e := errors.NewInternalError(util.ContextHelper.GetTraceId(ctx), "REF_ERROR", message)
+	e := errors.NewInternalError(utils.ContextHelper.GetTraceId(ctx), "REF_ERROR", message)
 	e.WithDetails("locator", locator)
 	return e
 }
