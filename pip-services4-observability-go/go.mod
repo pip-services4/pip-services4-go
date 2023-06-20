@@ -1,13 +1,11 @@
-module github.com/pip-services4/pip-services4-go/pip-services4-config-go
+module github.com/pip-services4/pip-services4-go/pip-services4-observability-go
 
 go 1.20
 
 require (
 	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230620094553-fae9ed291e24
 	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230620094553-fae9ed291e24
-	github.com/pip-services4/pip-services4-go/pip-services4-expressions-go v0.0.0-20230620094553-fae9ed291e24
 	github.com/stretchr/testify v1.8.4
-	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
