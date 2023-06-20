@@ -1,0 +1,19 @@
+---
+- descriptor: "pip-services:logger:console:default:1.0"
+  level: "trace"
+
+- descriptor: "pip-services:shutdown:default:default:1.0"
+  mode: exception
+  min_timeout: 3000
+  max_timeout: 10000 
+
+- descriptor: "pip-services-dummies:controller:default:ctrl1:1.0"
+  message: "Hello {{ USER }} from dummy controller #1"
+
+- descriptor: "pip-services-dummies:controller:default:ctrl2:1.0"
+  message: "Hello {{ USER }} from dummy controller #2"
+
+{{#THIRD_CONTROLLER}}
+- type: "DummyController,./obj/examples/DummyController"
+  message: "Hello {{ USER }} from dummy controller #3"
+{{/THIRD_CONTROLLER}}
