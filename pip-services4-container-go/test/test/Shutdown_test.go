@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/test"
+	"github.com/pip-services4/pip-services4-go/pip-services4-container-go/test"
 	"github.com/stretchr/testify/assert"
 )
 
