@@ -9,7 +9,7 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 )
 
-// MessageEnvelope allows adding additional information to messages. A correlation id, message id, and a message type
+// MessageEnvelope allows adding additional information to messages. A trace id, message id, and a message type
 // are added to the data being sent/received. Additionally, a MessageEnvelope can reference a lock token.
 // Side note: a MessageEnvelope"s message is stored as a buffer, so strings are converted
 // using utf8 conversions.
@@ -33,11 +33,11 @@ func NewEmptyMessageEnvelope() *MessageEnvelope {
 	return &c
 }
 
-// NewMessageEnvelope method are creates a new MessageEnvelope, which adds a correlation id, message id, and a type to the
+// NewMessageEnvelope method are creates a new MessageEnvelope, which adds a trace id, message id, and a type to the
 // data being sent/received.
 //
 //		Parameters:
-//	  - correlationId     (optional) transaction id to trace execution through call chain.
+//	  - traceId     (optional) transaction id to trace execution through call chain.
 //	  - messageType       a string value that defines the message"s type.
 //	  - message           the data being sent/received.
 //		Returns: *MessageEnvelope new instance
@@ -52,11 +52,11 @@ func NewMessageEnvelope(traceId string, messageType string, message []byte) *Mes
 	return &c
 }
 
-// NewMessageEnvelopeFromObject method are creates a new MessageEnvelope, which adds a correlation id, message id, and a type to the
+// NewMessageEnvelopeFromObject method are creates a new MessageEnvelope, which adds a trace id, message id, and a type to the
 // data object being sent/received.
 //
 //		Parameters:
-//	  - correlationId     (optional) transaction id to trace execution through call chain.
+//	  - traceId     (optional) transaction id to trace execution through call chain.
 //	  - messageType       a string value that defines the message"s type.
 //	  - message           the data object being sent/received.
 //		Returns: *MessageEnvelope new instance
@@ -124,7 +124,7 @@ func (c *MessageEnvelope) SetMessageAsObject(value any) {
 }
 
 // String method are convert"s this MessageEnvelope to a string, using the following format:
-// <correlation_id>,<MessageType>,<message.toString>
+// <trace_id>,<MessageType>,<message.toString>
 // If any of the values are nil, they will be replaced with ---.
 //
 //	Returns: the generated string.
@@ -154,9 +154,9 @@ func (c *MessageEnvelope) String() string {
 
 func (c MessageEnvelope) MarshalJSON() ([]byte, error) {
 	jsonData := map[string]any{
-		"message_id":     c.MessageId,
-		"correlation_id": c.TraceId,
-		"message_type":   c.MessageType,
+		"message_id":   c.MessageId,
+		"trace_id":     c.TraceId,
+		"message_type": c.MessageType,
 	}
 
 	if !c.SentTime.IsZero() {
@@ -188,7 +188,7 @@ func (c *MessageEnvelope) UnmarshalJSON(data []byte) error {
 	if _val, ok := jsonData["message_id"].(string); ok {
 		c.MessageId = _val
 	}
-	if _val, ok := jsonData["correlation_id"].(string); ok {
+	if _val, ok := jsonData["trace_id"].(string); ok {
 		c.TraceId = _val
 	}
 	if _val, ok := jsonData["message_type"].(string); ok {

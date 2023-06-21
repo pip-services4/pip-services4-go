@@ -18,7 +18,7 @@ type IMessageQueueOverrides interface {
 	IMessageQueue
 	// OpenWithParams method are opens the component with given connection and credential parameters.
 	//	Parameters:
-	//		- correlationId    	(optional) transaction id to trace execution through call chain.
+	//		- ctx context.Context execution context to trace execution through call chain.
 	//		- connections       is a connection parameters
 	//		- credential        is a credential parameters
 	//	Returns: error or nil no errors occured.
@@ -125,16 +125,15 @@ func (c *MessageQueue) SetReferences(ctx context.Context, references cref.IRefer
 // Open method are opens the component.
 //
 //	Parameters:
-//		- ctx context.Context
-//		- correlationId 		(optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //	Returns: error or null no errors occured.
-func (c *MessageQueue) Open(ctx context.Context, correlationId string) error {
+func (c *MessageQueue) Open(ctx context.Context) error {
 	connections, err := c.ConnectionResolver.ResolveAll(ctx)
 	if err != nil {
 		return err
 	}
 	if len(connections) == 0 {
-		err = cerr.NewConfigError(correlationId, "NO_CONNECTION", "Connection parameters are not set")
+		err = cerr.NewConfigError(utils.ContextHelper.GetTraceId(ctx), "NO_CONNECTION", "Connection parameters are not set")
 		return err
 	}
 
@@ -149,8 +148,7 @@ func (c *MessageQueue) Open(ctx context.Context, correlationId string) error {
 // OpenWithParams method are opens the component with given connection and credential parameters.
 //
 //	Parameters:
-//		- ctx context.Context
-//		- correlationId     	(optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- connections       	is a connection parameters
 //		- credential        	is a credential parameters
 //
@@ -163,7 +161,7 @@ func (c *MessageQueue) OpenWithParams(ctx context.Context, connections []*cconn.
 // CheckOpen if message queue has been opened
 //
 //	Parameters:
-//		- correlationId     (optional) transaction id to trace execution through call chain.
+//		- traceId     (optional) transaction id to trace execution through call chain.
 //	Returns: error or null for success.
 func (c *MessageQueue) CheckOpen(traceId string) error {
 	if !c.Overrides.IsOpen() {
@@ -180,8 +178,7 @@ func (c *MessageQueue) CheckOpen(traceId string) error {
 // Before sending the object is converted into JSON string and wrapped in a MessageEnvelop.
 //
 //	Parameters:
-//		- ctx context.Context
-//		- correlationId     (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- messageType       a message type
 //		- value             an object value to be sent
 //	Returns: error or nil for success.
@@ -194,8 +191,7 @@ func (c *MessageQueue) SendAsObject(ctx context.Context, messageType string, mes
 // BeginListen method are listens for incoming messages without blocking the current thread.
 //
 //	Parameters:
-//		- ctx context.Context
-//		- correlationId     (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- receiver          a receiver to receive incoming messages.
 //	see Listen
 //	see IMessageReceiver

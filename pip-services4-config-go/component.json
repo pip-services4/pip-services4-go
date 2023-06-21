@@ -1,5 +1,5 @@
 {
-  "name":  "pip-services4-commons-go",
+  "name":  "pip-services4-config-go",
   "type": "module",
   "language": "go",
   "version": "0.0.1",
