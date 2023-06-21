@@ -13,10 +13,10 @@ import (
 
 type DummyCommandSet struct {
 	ccomand.CommandSet
-	controller IDummyController
+	controller IDummyService
 }
 
-func NewDummyCommandSet(controller IDummyController) *DummyCommandSet {
+func NewDummyCommandSet(controller IDummyService) *DummyCommandSet {
 	c := DummyCommandSet{}
 	c.CommandSet = *ccomand.NewCommandSet()
 

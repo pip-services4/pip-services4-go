@@ -16,7 +16,7 @@ func TestDummyDirectClient(t *testing.T) {
 		cref.NewDescriptor(
 			"pip-services-dummies", "controller", "default",
 			"default", "1.0",
-		), tsample.NewDummyController(),
+		), tsample.NewDummyService(),
 	)
 	client.SetReferences(context.Background(), references)
 	client.Open(context.Background())

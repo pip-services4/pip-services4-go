@@ -11,25 +11,25 @@ import (
 	ccomand "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
 
-type DummyController struct {
+type DummyService struct {
 	commandSet *DummyCommandSet
 	entities   []Dummy
 }
 
-func NewDummyController() *DummyController {
-	dc := DummyController{}
+func NewDummyService() *DummyService {
+	dc := DummyService{}
 	dc.entities = make([]Dummy, 0)
 	return &dc
 }
 
-func (c *DummyController) GetCommandSet() *ccomand.CommandSet {
+func (c *DummyService) GetCommandSet() *ccomand.CommandSet {
 	if c.commandSet == nil {
 		c.commandSet = NewDummyCommandSet(c)
 	}
 	return &c.commandSet.CommandSet
 }
 
-func (c *DummyController) GetPageByFilter(ctx context.Context, filter *cquery.FilterParams,
+func (c *DummyService) GetPageByFilter(ctx context.Context, filter *cquery.FilterParams,
 	paging *cquery.PagingParams) (items *cquery.DataPage[Dummy], err error) {
 
 	if filter == nil {
@@ -66,7 +66,7 @@ func (c *DummyController) GetPageByFilter(ctx context.Context, filter *cquery.Fi
 	return cquery.NewDataPage[Dummy](result, int(total)), nil
 }
 
-func (c *DummyController) GetOneById(ctx context.Context, id string) (result Dummy, err error) {
+func (c *DummyService) GetOneById(ctx context.Context, id string) (result Dummy, err error) {
 	for i := 0; i < len(c.entities); i++ {
 		var entity Dummy = c.entities[i]
 		if id == entity.Id {
@@ -76,7 +76,7 @@ func (c *DummyController) GetOneById(ctx context.Context, id string) (result Dum
 	return Dummy{}, nil
 }
 
-func (c *DummyController) Create(ctx context.Context, entity Dummy) (result Dummy, err error) {
+func (c *DummyService) Create(ctx context.Context, entity Dummy) (result Dummy, err error) {
 	if entity.Id == "" {
 		entity.Id = keys.IdGenerator.NextLong()
 		c.entities = append(c.entities, entity)
@@ -84,7 +84,7 @@ func (c *DummyController) Create(ctx context.Context, entity Dummy) (result Dumm
 	return entity, nil
 }
 
-func (c *DummyController) Update(ctx context.Context, newEntity Dummy) (result Dummy, err error) {
+func (c *DummyService) Update(ctx context.Context, newEntity Dummy) (result Dummy, err error) {
 	for index := 0; index < len(c.entities); index++ {
 		var entity Dummy = c.entities[index]
 		if entity.Id == newEntity.Id {
@@ -96,7 +96,7 @@ func (c *DummyController) Update(ctx context.Context, newEntity Dummy) (result D
 	return Dummy{}, nil
 }
 
-func (c *DummyController) DeleteById(ctx context.Context, id string) (result Dummy, err error) {
+func (c *DummyService) DeleteById(ctx context.Context, id string) (result Dummy, err error) {
 	var entity Dummy
 
 	for i := 0; i < len(c.entities); {
@@ -115,16 +115,16 @@ func (c *DummyController) DeleteById(ctx context.Context, id string) (result Dum
 	return Dummy{}, nil
 }
 
-func (c *DummyController) CheckTraceId(ctx context.Context) (result map[string]string, err error) {
+func (c *DummyService) CheckTraceId(ctx context.Context) (result map[string]string, err error) {
 	result = map[string]string{"traceId": utils.ContextHelper.GetTraceId(ctx)}
 	return result, nil
 }
 
-func (c *DummyController) CheckErrorPropagation(ctx context.Context) error {
+func (c *DummyService) CheckErrorPropagation(ctx context.Context) error {
 	return cerr.NewNotFoundError(utils.ContextHelper.GetTraceId(ctx), "NOT_FOUND_TEST", "Not found error")
 }
 
-func (c *DummyController) CheckGracefulShutdownContext(ctx context.Context) error {
+func (c *DummyService) CheckGracefulShutdownContext(ctx context.Context) error {
 	defer cctx.DefaultErrorHandlerWithShutdown(ctx)
 
 	panic("called from DummyController.CheckGracefulShutdownContext")
