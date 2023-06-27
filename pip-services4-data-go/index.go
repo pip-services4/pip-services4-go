@@ -1,4 +1,4 @@
-package persistence
+package data
 
 import (
 	_ "github.com/pip-services4/pip-services4-go/pip-services4-data-go/data"

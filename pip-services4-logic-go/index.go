@@ -1,4 +1,4 @@
-package commons
+package logic
 
 import (
 	_ "github.com/pip-services4/pip-services4-go/pip-services4-logic-go/build"
