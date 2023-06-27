@@ -5,10 +5,9 @@ import (
 	"context"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
+	"os"
 
-	"github.com/gorilla/mux"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
@@ -20,6 +19,7 @@ import (
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 	ctrace "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/trace"
 	"github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/trace"
+	"goji.io/pat"
 )
 
 // RestController Abstract service that receives remove calls via HTTP/REST protocol.
@@ -474,7 +474,7 @@ func (c *RestController) RegisterInterceptor(route string,
 func (c *RestController) GetParam(req *http.Request, name string) string {
 	param := req.URL.Query().Get(name)
 	if param == "" {
-		param = mux.Vars(req)[name]
+		param = pat.Param(req, name)
 	}
 	return param
 }
@@ -487,7 +487,7 @@ func (c *RestController) GetParam(req *http.Request, name string) string {
 //
 // Returns error
 func (c *RestController) DecodeBody(req *http.Request, target any) error {
-	bodyBytes, err := ioutil.ReadAll(req.Body)
+	bodyBytes, err := io.ReadAll(req.Body)
 
 	if err != nil {
 		return err
@@ -500,7 +500,7 @@ func (c *RestController) DecodeBody(req *http.Request, target any) error {
 	}
 
 	_ = req.Body.Close()
-	req.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+	req.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
 	return nil
 }
@@ -551,7 +551,7 @@ func (c *RestController) GetTraceId(req *http.Request) string {
 }
 
 func (c *RestController) RegisterOpenApiSpecFromFile(path string) {
-	content, err := ioutil.ReadFile(path)
+	content, err := os.ReadFile(path)
 	if err != nil {
 		c.Logger.Error(
 			utils.ContextHelper.NewContextWithTraceId(context.Background(), "RestController"),

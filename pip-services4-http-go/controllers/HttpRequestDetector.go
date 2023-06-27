@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 	"regexp"
@@ -25,6 +24,7 @@ var (
 
 // DetectPlatform method are detects the platform (using "user-agent")
 // from which the given HTTP request was made.
+//
 //	Parameters:
 //		-  req  *http.Request an HTTP request to process.
 //	Returns: the detected platform and version. Detectable platforms: "mobile", "iphone",
@@ -93,6 +93,7 @@ func (c *_THttpRequestDetector) DetectPlatform(req *http.Request) string {
 }
 
 // DetectBrowser detects the browser (using "user-agent") from which the given HTTP request was made.
+//
 //	Parameters:
 //		-  req  *http.Reques an HTTP request to process.
 //	Returns: the detected browser. Detectable browsers: "chrome", "msie", "firefox",
@@ -133,6 +134,7 @@ func (c *_THttpRequestDetector) DetectBrowser(req *http.Request) string {
 }
 
 // DetectAddress method are detects the IP address from which the given HTTP request was received.
+//
 //	Parameters:
 //		- req *http.Reques an HTTP request to process.
 //	Returns the detected IP address (without a port). If no IP is detected -
@@ -154,10 +156,10 @@ func (c *_THttpRequestDetector) DetectAddress(req *http.Request) string {
 		if strings.Contains(ip, ":") {
 			res := strings.Split(ip, ":")
 			if len(res) > 0 {
-				ip = fmt.Sprintf("%s", net.ParseIP(res[0]))
+				ip = net.ParseIP(res[0]).String()
 			}
 		} else {
-			ip = fmt.Sprintf("%s", net.ParseIP(ip))
+			ip = net.ParseIP(ip).String()
 		}
 	}
 
@@ -165,6 +167,7 @@ func (c *_THttpRequestDetector) DetectAddress(req *http.Request) string {
 }
 
 // DetectServerHost method are detects the host name of the request"s destination server.
+//
 //	Parameters:
 //		- req *http.Request  an HTTP request to process.
 //	Returns: the destination server"s host name.
@@ -174,6 +177,7 @@ func (c *_THttpRequestDetector) DetectServerHost(req *http.Request) string {
 }
 
 // DetectServerPort method are detects the request`s destination port number.
+//
 //	Parameters:
 //		- req  *http.Request an HTTP request to process.
 //	Returns: the detected port number or <code>80</code> (if none are detected).

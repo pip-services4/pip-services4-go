@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
@@ -17,6 +16,7 @@ import (
 	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	tdata "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
 	tlogic "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
+	"goji.io/pat"
 )
 
 type DummyRestController struct {
@@ -85,13 +85,11 @@ func (c *DummyRestController) getPageByFilter(res http.ResponseWriter, req *http
 
 func (c *DummyRestController) getOneById(res http.ResponseWriter, req *http.Request) {
 	params := req.URL.Query()
-	vars := mux.Vars(req)
-
 	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 
 	dummyId := params.Get("dummy_id")
 	if dummyId == "" {
-		dummyId = vars["dummy_id"]
+		dummyId = pat.Param(req, "dummy_id")
 	}
 	result, err := c.service.GetOneById(
 		ctx,
@@ -154,11 +152,10 @@ func (c *DummyRestController) update(res http.ResponseWriter, req *http.Request)
 func (c *DummyRestController) deleteById(res http.ResponseWriter, req *http.Request) {
 	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	params := req.URL.Query()
-	vars := mux.Vars(req)
 
 	dummyId := params.Get("dummy_id")
 	if dummyId == "" {
-		dummyId = vars["dummy_id"]
+		dummyId = pat.Param(req, "dummy_id")
 	}
 
 	result, err := c.service.DeleteById(
@@ -217,7 +214,7 @@ func (c *DummyRestController) Register() {
 	)
 
 	c.RegisterRoute(
-		http.MethodGet, "/dummies/{dummy_id}",
+		http.MethodGet, "/dummies/:dummy_id",
 		cvalid.NewObjectSchema().
 			WithRequiredProperty("dummy_id", cconv.String).Schema,
 		c.getOneById,
@@ -238,7 +235,7 @@ func (c *DummyRestController) Register() {
 	)
 
 	c.RegisterRoute(
-		http.MethodDelete, "/dummies/{dummy_id}",
+		http.MethodDelete, "/dummies/:dummy_id",
 		cvalid.NewObjectSchema().
 			WithRequiredProperty("dummy_id", cconv.String).Schema,
 		c.deleteById,

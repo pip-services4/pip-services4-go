@@ -3,10 +3,10 @@ package auth
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
+	"goji.io/pat"
 )
 
 type OwnerAuthManager struct {
@@ -31,7 +31,7 @@ func (c *OwnerAuthManager) Owner(idParam string) func(res http.ResponseWriter, r
 		} else {
 			userId := req.URL.Query().Get(idParam)
 			if userId == "" {
-				userId = mux.Vars(req)[idParam]
+				userId = pat.Param(req, idParam)
 			}
 
 			reqUserId, ok := req.Context().Value(PipAuthUserId).(string)
@@ -70,7 +70,7 @@ func (c *OwnerAuthManager) OwnerOrAdmin(idParam string) func(res http.ResponseWr
 
 			userId := req.URL.Query().Get(idParam)
 			if userId == "" {
-				userId = mux.Vars(req)[idParam]
+				userId = pat.Param(req, idParam)
 			}
 			roles := user.GetAsArray(string(PipAuthRoles))
 			admin := false

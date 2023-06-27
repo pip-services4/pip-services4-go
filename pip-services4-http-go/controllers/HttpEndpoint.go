@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"regexp"
@@ -13,10 +13,13 @@ import (
 	"strings"
 	"time"
 
-	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	"github.com/rs/cors"
+	"goji.io/pat"
+	"goji.io/pattern"
 
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
+	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	"goji.io"
+
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
@@ -62,7 +65,7 @@ import (
 type HttpEndpoint struct {
 	defaultConfig          *cconf.ConfigParams
 	server                 *http.Server
-	router                 *mux.Router
+	mux                    *goji.Mux
 	connectionResolver     *connect.HttpConnectionResolver
 	logger                 *clog.CompositeLogger
 	counters               *ccount.CompositeCounters
@@ -195,29 +198,31 @@ func (c *HttpEndpoint) Open(ctx context.Context) error {
 
 	c.uri = connection.Uri()
 	url := connection.Host() + ":" + strconv.Itoa(connection.Port())
-	c.server = &http.Server{Addr: url}
+
+	c.mux = goji.NewMux()
+	c.server = &http.Server{Addr: url, Handler: c.mux}
 	// Provide container context to http handler
 	if ctx != nil {
 		c.server.BaseContext = func(listener net.Listener) context.Context {
 			return ctx
 		}
 	}
-	c.router = mux.NewRouter()
 
-	allowedOrigins := handlers.AllowedOrigins(c.allowedOrigins)
-	allowedMethods := handlers.AllowedMethods([]string{
-		"POST",
-		"GET",
-		"OPTIONS",
-		"PUT",
-		"DELETE",
-		"PATCH",
-	})
-	allowedHeaders := handlers.AllowedHeaders(c.allowedHeaders)
-	c.server.Handler = handlers.CORS(allowedOrigins, allowedMethods, allowedHeaders)(c.router)
+	c.mux.Use(cors.New(cors.Options{
+		AllowedOrigins: c.allowedOrigins,
+		AllowedMethods: []string{
+			"POST",
+			"GET",
+			"OPTIONS",
+			"PUT",
+			"DELETE",
+			"PATCH",
+		},
+		AllowedHeaders: c.allowedHeaders,
+	}).Handler)
 
-	c.router.Use(c.noCache)
-	c.router.Use(c.doMaintenance)
+	c.mux.Use(c.noCache)
+	c.mux.Use(c.doMaintenance)
 
 	c.performRegistrations()
 
@@ -391,18 +396,20 @@ func (c *HttpEndpoint) RegisterRoute(method string, route string, schema *cvalid
 				params[k] = v[0]
 			}
 
-			for k, v := range mux.Vars(r) {
-				params[k] = v
+			if reqVars, ok := r.Context().Value(pattern.AllVariables).(map[pattern.Variable]any); ok {
+				for k, v := range reqVars {
+					params[string(k)] = v
+				}
 			}
 
 			// Make copy of request
-			bodyBuf, bodyErr := ioutil.ReadAll(r.Body)
+			bodyBuf, bodyErr := io.ReadAll(r.Body)
 			if bodyErr != nil {
 				HttpResponseSender.SendError(w, r, bodyErr)
 				return
 			}
 			_ = r.Body.Close()
-			r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
+			r.Body = io.NopCloser(bytes.NewBuffer(bodyBuf))
 			//-------------------------
 			var body any
 			_ = json.Unmarshal(bodyBuf, &body)
@@ -417,7 +424,7 @@ func (c *HttpEndpoint) RegisterRoute(method string, route string, schema *cvalid
 		}
 		action(w, r)
 	})
-	c.router.Handle(route, actionCurl).Methods(strings.ToUpper(method))
+	c.mux.HandleFunc(pat.NewWithMethods(route, strings.ToUpper(method)), actionCurl)
 }
 
 // RegisterRouteWithAuth method are registers an action with authorization in this objects REST server (service)
@@ -459,7 +466,7 @@ func (c *HttpEndpoint) RegisterInterceptor(route string, action func(w http.Resp
 			}
 		})
 	}
-	c.router.Use(interceptorFunc)
+	c.mux.Use(interceptorFunc)
 }
 
 // AddCorsHeader method adds allowed header, ignore if it already exists

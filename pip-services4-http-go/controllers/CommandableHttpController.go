@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccomands "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
+	"goji.io/pattern"
 )
 
 // CommandableHttpController abstract service that receives remove calls via HTTP/REST protocol
@@ -140,13 +140,13 @@ func (c *CommandableHttpController) Register() {
 		c.RegisterRoute(http.MethodPost, route, nil, func(res http.ResponseWriter, req *http.Request) {
 
 			// Make copy of request
-			bodyBuf, bodyErr := ioutil.ReadAll(req.Body)
+			bodyBuf, bodyErr := io.ReadAll(req.Body)
 			if bodyErr != nil {
 				HttpResponseSender.SendError(res, req, bodyErr)
 				return
 			}
 			_ = req.Body.Close()
-			req.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuf))
+			req.Body = io.NopCloser(bytes.NewBuffer(bodyBuf))
 			//-------------------------
 			// TODO:: think about marshaling and error
 			var params map[string]any = make(map[string]any, 0)
@@ -156,8 +156,10 @@ func (c *CommandableHttpController) Register() {
 			for k, v := range urlParams {
 				params[k] = v[0]
 			}
-			for k, v := range mux.Vars(req) {
-				params[k] = v
+			if reqVars, ok := req.Context().Value(pattern.AllVariables).(map[pattern.Variable]any); ok {
+				for k, v := range reqVars {
+					params[string(k)] = v
+				}
 			}
 
 			traceId := c.GetTraceId(req)

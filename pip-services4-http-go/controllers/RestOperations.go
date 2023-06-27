@@ -4,16 +4,16 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
+	"goji.io/pat"
 )
 
 // RestOperations helper class for REST operations
@@ -113,7 +113,7 @@ func (c *RestOperations) GetPagingParams(req *http.Request) *cquery.PagingParams
 func (c *RestOperations) GetParam(req *http.Request, name string) string {
 	param := req.URL.Query().Get(name)
 	if param == "" {
-		param = mux.Vars(req)[name]
+		param = pat.Param(req, name)
 	}
 	return param
 }
@@ -126,7 +126,7 @@ func (c *RestOperations) GetParam(req *http.Request, name string) string {
 //
 // Returns: error
 func (c *RestOperations) DecodeBody(req *http.Request, target any) error {
-	bodyBytes, err := ioutil.ReadAll(req.Body)
+	bodyBytes, err := io.ReadAll(req.Body)
 
 	if err != nil {
 		return err
@@ -139,7 +139,7 @@ func (c *RestOperations) DecodeBody(req *http.Request, target any) error {
 	}
 
 	_ = req.Body.Close()
-	req.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+	req.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
 	return nil
 }
