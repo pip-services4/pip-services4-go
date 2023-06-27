@@ -1,4 +1,4 @@
-package services
+package controllers
 
 import (
 	"net/http"
@@ -10,6 +10,7 @@ type HeartbeatOperations struct {
 }
 
 // NewHeartbeatOperations creates new instance HeartbeatOperations
+//
 //	Returns: *HeartbeatOperations
 func NewHeartbeatOperations() *HeartbeatOperations {
 	return &HeartbeatOperations{

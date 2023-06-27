@@ -1,4 +1,4 @@
-package services
+package controllers
 
 // ISwaggerController Interface to perform Swagger registrations.
 type ISwaggerController interface {

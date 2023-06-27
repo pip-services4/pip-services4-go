@@ -1,4 +1,4 @@
-package services
+package controllers
 
 // IRegisterable is interface to perform on-demand registrations.
 type IRegisterable interface {
