@@ -1,0 +1,97 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "pip-services.grpc.dummies";
+option java_outer_classname = "DummiesProto";
+option objc_class_prefix = "HLW";
+option go_package = "./protos";
+
+package dummies;
+
+message ErrorDescription {
+  string category = 1;
+  string code = 2;
+  string trace_id = 3;
+  string status = 4;
+  string message = 5;
+  string cause = 6;
+  string stack_trace = 7;
+  map<string, string> details = 8;
+}
+
+message PagingParams {
+  int64 skip = 1;
+  int64 take = 2;
+  bool total = 3;
+}
+
+message Dummy {
+  string id = 1;
+  string key = 2;
+  string content = 3;
+}
+
+message DummiesPage {
+    int64 total = 1;
+    repeated Dummy data = 2;
+}
+
+// The dummies service definition.
+service Dummies {
+//  rpc get_dummies (DummiesPageRequest) returns (DummiesPageReply) {}
+//  rpc get_dummy_by_id (DummyIdRequest) returns (DummyObjectReply) {}
+//  rpc create_dummy (DummyObjectRequest) returns (DummyObjectReply) {}
+//  rpc update_dummy (DummyObjectRequest) returns (DummyObjectReply) {}
+//  rpc delete_dummy_by_id (DummyIdRequest) returns (DummyObjectReply) {}
+
+  rpc get_dummies (DummiesPageRequest) returns (DummiesPage) {}
+  rpc get_dummy_by_id (DummyIdRequest) returns (Dummy) {}
+  rpc create_dummy (DummyObjectRequest) returns (Dummy) {}
+  rpc update_dummy (DummyObjectRequest) returns (Dummy) {}
+  rpc delete_dummy_by_id (DummyIdRequest) returns (Dummy) {}
+}
+
+// The request message containing the page request.
+message DummiesPageRequest {
+  string trace_id = 1;
+  map<string, string> filter = 2;
+  PagingParams paging = 3;
+}
+
+// The response message containing the page response
+//message DummiesPageReply {
+//  ErrorDescription error = 1;
+//  DummiesPage page = 2;
+//}
+
+// The request message containing the object id request.
+message DummyIdRequest {
+  string trace_id = 1;
+  string dummy_id = 2;
+}
+
+// The request message containing the object value request.
+message DummyObjectRequest {
+  string trace_id = 1;
+  Dummy dummy = 2;
+}
+
+// The response message containing the object value response
+//message DummyObjectReply {
+//  ErrorDescription error = 1;
+//  Dummy result = 2;
+//}

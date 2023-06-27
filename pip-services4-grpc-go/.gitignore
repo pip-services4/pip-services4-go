@@ -1,0 +1,4 @@
+.DS_Store
+/dist
+.idea
+docker/*id_rsa
