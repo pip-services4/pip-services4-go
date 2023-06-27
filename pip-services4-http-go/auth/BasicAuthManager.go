@@ -5,7 +5,7 @@ import (
 
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
-	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/services"
+	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 )
 
 type BasicAuthManager struct {

@@ -14,7 +14,7 @@ import (
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
-	"github.com/pip-services4/pip-services4-go/pip-services4-http-go/services"
+	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	tdata "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
 	tlogic "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-http-go/services"
+	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 )
 
 type DummyCommandableHttpController struct {

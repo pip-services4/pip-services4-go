@@ -3,7 +3,7 @@ package build
 import (
 	cbuild "github.com/pip-services4/pip-services4-go/pip-services4-components-go/build"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-http-go/services"
+	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 )
 
 // DefaultRpcFactory are creates RPC components by their descriptors

@@ -13,7 +13,7 @@ import (
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
 	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
-	"github.com/pip-services4/pip-services4-go/pip-services4-http-go/services"
+	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	tlogic "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
 )
 
