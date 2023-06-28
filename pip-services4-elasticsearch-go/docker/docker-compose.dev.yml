@@ -1,0 +1,38 @@
+version: "2"
+
+services:
+
+  fluentd:
+    image: fluent/fluentd
+    container_name: fluent
+    volumes:
+     - ./logs:/fluentd/log
+    ports:
+     - "24224:24224"
+     
+  elasticsearch:
+    # image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    container_name: elasticsearch
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+
+  kibana:
+    # image: docker.elastic.co/kibana/kibana:6.2.3
+    image: docker.elastic.co/kibana/kibana:7.10.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - KIBANA_BASE_URL=
+    ports:
+      - "5601:5601"
+
