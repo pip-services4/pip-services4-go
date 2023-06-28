@@ -11,7 +11,7 @@ import (
 // HandleHttpResponse method helps handle http response body
 //
 //	Parameters:
-//		- ctx context.Context
+//		- ctx context.Context execution context to trace execution through call chain.
 //		- traceId string (optional) transaction id to trace execution through call chain.
 //	Returns: T any result, err error
 func HandleHttpResponse[T any](r *http.Response, traceId string) (T, error) {

@@ -1,0 +1,19 @@
+FROM golang:1.20
+
+# Set environment variables for Go
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+# Set a working directory
+WORKDIR /app
+
+# Copy the entire project
+COPY . .
+
+# Check and download dependencies
+RUN go mod tidy
+
+# Specify the command from running tests
+CMD go test -v ./test/...
