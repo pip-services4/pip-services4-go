@@ -5,8 +5,8 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 // CredentialResolver helper class to retrieve component credentials.
@@ -140,7 +140,7 @@ func (c *CredentialResolver) lookupInStores(ctx context.Context,
 	}
 
 	return nil, errors.NewConfigError(
-		utils.ContextHelper.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param")
+		cctx.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param")
 }
 
 // Lookup component credential parameters.
@@ -174,5 +174,5 @@ func (c *CredentialResolver) Lookup(ctx context.Context) (*CredentialParams, err
 	}
 
 	return nil, errors.NewConfigError(
-		utils.ContextHelper.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param")
+		cctx.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param")
 }

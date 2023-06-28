@@ -8,11 +8,12 @@ import (
 	"time"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	"github.com/pip-services4/pip-services4-go/pip-services4-persistence-go/read"
 	"github.com/pip-services4/pip-services4-go/pip-services4-persistence-go/write"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	"github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
 
@@ -190,9 +191,9 @@ func (c *MemoryPersistence[T]) Clear(ctx context.Context) error {
 //	Return cdata.DataPage[T], error data page or error.
 func (c *MemoryPersistence[T]) GetPageByFilter(ctx context.Context,
 	filterFunc func(T) bool,
-	paging cdata.PagingParams,
+	paging cquery.PagingParams,
 	sortFunc func(T, T) bool,
-	selectFunc func(T) T) (cdata.DataPage[T], error) {
+	selectFunc func(T) T) (cquery.DataPage[T], error) {
 
 	c.Mtx.RLock()
 	defer c.Mtx.RUnlock()
@@ -245,7 +246,7 @@ func (c *MemoryPersistence[T]) GetPageByFilter(ctx context.Context,
 
 	c.Logger.Trace(ctx, "Retrieved %d items", len(items))
 
-	return *cdata.NewDataPage[T](items, int(total)), nil
+	return *cquery.NewDataPage[T](items, int(total)), nil
 }
 
 // GetListByFilter gets a list of data items retrieved by a given filter and sorted according to sort parameters.
@@ -445,7 +446,7 @@ func (c *MemoryPersistence[T]) GetCountByFilter(ctx context.Context,
 }
 
 func (c *MemoryPersistence[T]) cloneItem(item any) T {
-	if cloneableItem, ok := item.(cdata.ICloneable[T]); ok {
+	if cloneableItem, ok := item.(data.ICloneable[T]); ok {
 		return cloneableItem.Clone()
 	}
 

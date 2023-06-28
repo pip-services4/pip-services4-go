@@ -13,7 +13,6 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
@@ -277,7 +276,7 @@ func (c *CloudWatchCounters) Save(ctx context.Context, counters []ccount.Counter
 				params.MetricData = data
 				_, err := c.client.PutMetricDataWithContext(ctx, params)
 				if err != nil && c.logger != nil {
-					c.logger.Error(utils.ContextHelper.NewContextWithTraceId(ctx, "cloudwatch_counters"), err, "putMetricData error")
+					c.logger.Error(cctx.NewContextWithTraceId(ctx, "cloudwatch_counters"), err, "putMetricData error")
 				}
 				data = make([]*cloudwatch.MetricDatum, 0)
 			}
@@ -292,7 +291,7 @@ func (c *CloudWatchCounters) Save(ctx context.Context, counters []ccount.Counter
 	if len(data) > 0 {
 		_, err := c.client.PutMetricDataWithContext(ctx, params)
 		if err != nil && c.logger != nil {
-			c.logger.Error(utils.ContextHelper.NewContextWithTraceId(ctx, "cloudwatch_counters"), err, "putMetricData error")
+			c.logger.Error(cctx.NewContextWithTraceId(ctx, "cloudwatch_counters"), err, "putMetricData error")
 		}
 	}
 	return nil

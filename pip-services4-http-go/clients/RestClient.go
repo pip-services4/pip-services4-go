@@ -17,8 +17,8 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	rpccon "github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -66,7 +66,7 @@ import (
 //				return nil, calErr
 //			}
 //
-//			return return clients.HandleHttpResponse[*tdata.MyDataPage[MyData]](response, utils.ContextHelper.GetTraceId(ctx))
+//			return return clients.HandleHttpResponse[*tdata.MyDataPage[MyData]](response, cctx.GetTraceId(ctx))
 //		}
 //
 //		client := NewMyRestClient();
@@ -237,7 +237,7 @@ func (c *RestClient) Open(ctx context.Context) error {
 	}
 	if c.Client == nil {
 		return cerr.NewConnectionError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"CANNOT_CONNECT",
 			"Connection to REST service failed",
 		).WithDetails("url", c.Uri)
@@ -268,7 +268,7 @@ func (c *RestClient) Close(ctx context.Context) error {
 //		- ctx context.Context execution context to trace execution through call chain.
 //	Returns: invocation parameters with added trace id.
 func (c *RestClient) AddTraceId(params *cdata.StringValueMap, ctx context.Context) *cdata.StringValueMap {
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	// Automatically generate short ids for now
 	if traceId == "" {
 		//traceId = IdGenerator.NextShort()
@@ -374,7 +374,7 @@ func (c *RestClient) Call(ctx context.Context, method string, route string,
 			retries--
 			if retries == 0 {
 				return nil, cerr.NewUnknownError(
-					utils.ContextHelper.GetTraceId(ctx),
+					cctx.GetTraceId(ctx),
 					"COMMUNICATION_ERROR",
 					"Unknown communication problem on REST client",
 				).
@@ -397,7 +397,7 @@ func (c *RestClient) Call(ctx context.Context, method string, route string,
 
 	if response.StatusCode >= 400 {
 		defer response.Body.Close()
-		return nil, c.handleResponseError(response, utils.ContextHelper.GetTraceId(ctx))
+		return nil, c.handleResponseError(response, cctx.GetTraceId(ctx))
 	}
 
 	return response, nil
@@ -416,7 +416,7 @@ func (c *RestClient) waitForRetry(ctx context.Context, retries int) error {
 				Category: "Application",
 				Code:     "CONTEXT_CANCELLED",
 				Message:  "request canceled by parent context",
-				TraceId:  utils.ContextHelper.GetTraceId(ctx),
+				TraceId:  cctx.GetTraceId(ctx),
 			},
 		)
 	}
@@ -428,7 +428,7 @@ func (c *RestClient) prepareRequest(ctx context.Context,
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, cerr.NewUnknownError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"UNSUPPORTED_METHOD",
 			"Method is not supported by REST client",
 		).
@@ -438,7 +438,7 @@ func (c *RestClient) prepareRequest(ctx context.Context,
 	// Set headers
 	req.Header.Set("Content-Type", "application/json")
 	if c.contextLocation == "headers" || c.contextLocation == "both" {
-		req.Header.Set("trace_id", utils.ContextHelper.GetTraceId(ctx))
+		req.Header.Set("trace_id", cctx.GetTraceId(ctx))
 	}
 	for k, v := range c.Headers.Value() {
 		req.Header.Set(k, v)

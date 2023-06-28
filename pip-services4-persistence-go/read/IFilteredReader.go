@@ -3,7 +3,7 @@ package read
 import (
 	"context"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 )
 
 // IFilteredReader interface for data processing components that can
@@ -20,5 +20,5 @@ type IFilteredReader[T any] interface {
 	//		- sort  data.SortParams sort parameters
 	//	Returns: []T, error receives list of items or error.
 	GetListByFilter(ctx context.Context,
-		filter cdata.FilterParams, sort cdata.SortParams) (items []T, err error)
+		filter cquery.FilterParams, sort cquery.SortParams) (items []T, err error)
 }

@@ -19,7 +19,6 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccont "github.com/pip-services4/pip-services4-go/pip-services4-container-go/container"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
@@ -290,7 +289,7 @@ func (c *AzureFunction) Run(ctx context.Context) {
 
 	ctx, _ = cctx.AddShutdownChanToContext(ctx, c.feedbackChan)
 	ctx, _ = cctx.AddErrShutdownChanToContext(ctx, c.feedbackWithErrorChan)
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, traceId)
+	ctx = cctx.NewContextWithTraceId(ctx, traceId)
 
 	path := c.getConfigPath()
 	parameters := c.getConfigParameters()

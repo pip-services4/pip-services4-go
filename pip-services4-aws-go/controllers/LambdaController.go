@@ -61,7 +61,7 @@ type ILambdaControllerOverrides interface {
 //			c.RegisterAction("get_mydata", nil,  func(ctx context.Context, params map[string]any)(any, error) {
 //		        traceId := params.GetAsString("trace_id")
 //		        id := params.GetAsString("id")
-//				return  c.controller.GetMyData(utils.ContextHelper.NewContextWithTraceId(ctx), id)
+//				return  c.controller.GetMyData(cctx.NewContextWithTraceId(ctx), id)
 //		    })
 //		    ...
 //		}

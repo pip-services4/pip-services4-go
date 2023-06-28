@@ -6,7 +6,7 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cauth "github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
 	cconn "github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 )
@@ -189,7 +189,7 @@ func (c *AzureFunctionConnectionParams) Validate(ctx context.Context) error {
 
 	if !uriOk && (!appNameOk || !functionNameOk || !protocolOk) {
 		return cerr.NewConfigError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"NO_CONNECTION_URI",
 			"No uri, app_name and function_name is not configured in Auzre function uri",
 		)
@@ -197,7 +197,7 @@ func (c *AzureFunctionConnectionParams) Validate(ctx context.Context) error {
 
 	if protocolOk && protocol != "http" && protocol != "https" {
 		return cerr.NewConfigError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"WRONG_PROTOCOL",
 			"Protocol is not supported by REST connection",
 		).WithDetails("protocol", protocol)

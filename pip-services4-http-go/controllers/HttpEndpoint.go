@@ -23,7 +23,6 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -385,7 +384,7 @@ func (c *HttpEndpoint) RegisterRoute(method string, route string, schema *cvalid
 					msg := cconv.StringConverter.ToString(r)
 					err = errors.New(msg)
 				}
-				ctx := utils.ContextHelper.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
+				ctx := cctx.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
 				c.logger.Error(ctx, err, "http handler panics with error")
 			}
 		}()

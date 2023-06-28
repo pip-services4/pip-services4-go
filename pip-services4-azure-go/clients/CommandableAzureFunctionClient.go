@@ -50,7 +50,7 @@ import (
 //				return MyData{}, err
 //			}
 //
-//			return rpcclient.HandleHttpResponse[MyData](response, utils.ContextHelper.GetTraceId(ctx))
+//			return rpcclient.HandleHttpResponse[MyData](response, cctx.GetTraceId(ctx))
 //		}
 //
 //		...

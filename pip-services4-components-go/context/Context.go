@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 // ContextShutdownChan a channel to send
@@ -165,4 +166,49 @@ func DefaultErrorHandlerWithShutdown(ctx context.Context) {
 		}
 		SendShutdownSignalWithErr(ctx, err)
 	}
+}
+
+func NewContextWithTraceId(ctx context.Context, traceId string) context.Context {
+	return context.WithValue(ctx, utils.TRACE_ID, traceId)
+}
+
+func GetTraceId(ctx context.Context) string {
+	traceId := ctx.Value(utils.TRACE_ID)
+
+	if traceId == nil || traceId == "" {
+		traceId = ctx.Value("trace_id")
+		if traceId == nil || traceId == "" {
+			traceId = ctx.Value("traceId")
+		}
+	}
+
+	if val, ok := traceId.(string); ok {
+		return val
+	} else {
+		return ""
+	}
+}
+
+func GetClient(ctx context.Context) string {
+	client := ctx.Value(utils.CLIENT)
+
+	if client == nil || client == "" {
+		client = ctx.Value("client")
+	}
+
+	if val, ok := client.(string); ok {
+		return val
+	} else {
+		return ""
+	}
+}
+
+func GetUser(ctx context.Context) any {
+	user := ctx.Value(utils.TRACE_ID)
+
+	if user == nil || user == "" {
+		user = ctx.Value("user")
+	}
+
+	return user
 }

@@ -5,8 +5,8 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 	ctrace "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/trace"
@@ -167,7 +167,7 @@ func (c *DirectClient) Open(ctx context.Context) error {
 	}
 
 	if c.Controller == nil {
-		err := cerr.NewConnectionError(utils.ContextHelper.GetTraceId(ctx), "NO_CONTROLLER", "Controller reference is missing")
+		err := cerr.NewConnectionError(cctx.GetTraceId(ctx), "NO_CONTROLLER", "Controller reference is missing")
 		return err
 	}
 

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 // FixedRateTimer timer that is triggered in equal time intervals.
@@ -108,7 +107,7 @@ func (c *FixedRateTimer) SetTask(value INotifiable) {
 	}
 	c.task = value
 	c.callback = func(ctx context.Context) {
-		c.task.Notify(utils.ContextHelper.NewContextWithTraceId(ctx, "timer"), NewEmptyParameters())
+		c.task.Notify(cctx.NewContextWithTraceId(ctx, "timer"), NewEmptyParameters())
 	}
 }
 

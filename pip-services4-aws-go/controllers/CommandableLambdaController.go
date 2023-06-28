@@ -3,8 +3,8 @@ package controllers
 import (
 	"context"
 
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccomands "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
 
@@ -79,7 +79,7 @@ func (c *CommandableLambdaController) Register() {
 	}
 	controller, ok := resCtrl.(ccomands.ICommandable)
 	if !ok {
-		c.Logger.Error(utils.ContextHelper.NewContextWithTraceId(context.Background(), "CommandableLambdaController"),
+		c.Logger.Error(cctx.NewContextWithTraceId(context.Background(), "CommandableLambdaController"),
 			nil, "Can't cast Controller to ICommandable")
 		return
 	}
@@ -92,7 +92,7 @@ func (c *CommandableLambdaController) Register() {
 		name := command.Name()
 		c.RegisterAction(name, nil, func(ctx context.Context, params map[string]any) (any, error) {
 			traceId, _ := params["trace_id"].(string)
-			ctx = utils.ContextHelper.NewContextWithTraceId(ctx, traceId)
+			ctx = cctx.NewContextWithTraceId(ctx, traceId)
 			args := cexec.NewParametersFromValue(params)
 			args.Remove("trace_id")
 

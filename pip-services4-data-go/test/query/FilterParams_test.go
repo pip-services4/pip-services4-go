@@ -1,15 +1,17 @@
-package test_data
+package test_query
 
 import (
 	"encoding/json"
 	"testing"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
+
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFilterParamsCreate(t *testing.T) {
-	filter := data.NewFilterParamsFromTuples(
+	filter := query.NewFilterParamsFromTuples(
 		"value1", 123,
 		"value2", "ABC",
 	)
@@ -20,7 +22,7 @@ func TestFilterParamsCreate(t *testing.T) {
 func TestFilterParamsJsonSerialization(t *testing.T) {
 	json1 := []byte("{\"key1\":\"1\",\"key2\":\"A\"}")
 
-	var value *data.StringValueMap
+	var value *cdata.StringValueMap
 	err := json.Unmarshal(json1, &value)
 	assert.Empty(t, err)
 	val, ok := value.Get("key1")

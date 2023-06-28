@@ -3,7 +3,7 @@ package test_persistence
 import (
 	"context"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cpersist "github.com/pip-services4/pip-services4-go/pip-services4-persistence-go/persistence"
 )
 
@@ -17,7 +17,7 @@ func NewDummyMapMemoryPersistence() *DummyMapMemoryPersistence {
 	}
 }
 
-func filterFunc(filter cdata.FilterParams) func(item DummyMap) bool {
+func filterFunc(filter cquery.FilterParams) func(item DummyMap) bool {
 
 	var key string
 
@@ -60,14 +60,14 @@ func sortFunc(a, b DummyMap) bool {
 }
 
 func (c *DummyMapMemoryPersistence) GetPageByFilter(ctx context.Context,
-	filter cdata.FilterParams, paging cdata.PagingParams) (result cdata.DataPage[DummyMap], err error) {
+	filter cquery.FilterParams, paging cquery.PagingParams) (result cquery.DataPage[DummyMap], err error) {
 
 	return c.IdentifiableMemoryPersistence.
 		GetPageByFilter(ctx, filterFunc(filter), paging, sortFunc, nil)
 }
 
 func (c *DummyMapMemoryPersistence) GetCountByFilter(ctx context.Context,
-	filter cdata.FilterParams) (count int64, err error) {
+	filter cquery.FilterParams) (count int64, err error) {
 
 	return c.IdentifiableMemoryPersistence.
 		GetCountByFilter(ctx, filterFunc(filter))

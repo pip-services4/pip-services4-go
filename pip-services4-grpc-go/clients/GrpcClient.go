@@ -51,7 +51,7 @@ import (
 //
 //	func  (c *MyGrpcClient) GetData(ctx context.Context, id string) (res any, err error) {
 //		req := &testproto.MyDataIdRequest{
-//		    TraceId: utils.ContextHelper.GetTraceId(ctx),
+//		    TraceId: cctx.GetTraceId(ctx),
 //		    mydataId:       id,
 //		}
 //		reply := new(testproto.MyData)

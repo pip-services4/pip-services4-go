@@ -6,7 +6,7 @@ import (
 	"time"
 
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 )
 
 // MessageEnvelope allows adding additional information to messages. A trace id, message id, and a message type
@@ -47,7 +47,7 @@ func NewMessageEnvelope(traceId string, messageType string, message []byte) *Mes
 	}
 	c.TraceId = traceId
 	c.MessageType = messageType
-	c.MessageId = cdata.IdGenerator.NextLong()
+	c.MessageId = keys.IdGenerator.NextLong()
 	c.Message = message
 	return &c
 }
@@ -66,7 +66,7 @@ func NewMessageEnvelopeFromObject(traceId string, messageType string, message an
 	}
 	c.TraceId = traceId
 	c.MessageType = messageType
-	c.MessageId = cdata.IdGenerator.NextLong()
+	c.MessageId = keys.IdGenerator.NextLong()
 	c.SetMessageAsObject(message)
 	return &c
 }

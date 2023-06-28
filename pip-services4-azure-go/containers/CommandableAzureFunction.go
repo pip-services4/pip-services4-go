@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	azureutil "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	ccomand "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
@@ -82,7 +82,7 @@ func (c *CommandableAzureFunction) registerCommandSet(commandSet *ccomand.Comman
 
 		c.RegisterAction(command.Name(), nil, func(w http.ResponseWriter, r *http.Request) {
 			traceId := c.GetTraceId(r)
-			ctx := utils.ContextHelper.NewContextWithTraceId(r.Context(), traceId)
+			ctx := cctx.NewContextWithTraceId(r.Context(), traceId)
 			args := c.GetParameters(r)
 
 			timing := c.Instrument(ctx, command.Name())
@@ -105,7 +105,7 @@ func (c *CommandableAzureFunction) Register() {
 
 	controller, ok := resCtrl.(ccomand.ICommandable)
 	if !ok {
-		c.Logger().Error(utils.ContextHelper.NewContextWithTraceId(context.Background(), "CommandableAzureController"),
+		c.Logger().Error(cctx.NewContextWithTraceId(context.Background(), "CommandableAzureController"),
 			nil, "Can't cast Service to ICommandable")
 		return
 	}

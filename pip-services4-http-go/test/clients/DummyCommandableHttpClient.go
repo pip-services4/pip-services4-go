@@ -4,7 +4,7 @@ import (
 	"context"
 
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	"github.com/pip-services4/pip-services4-go/pip-services4-http-go/clients"
 	tsample "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
@@ -30,7 +30,7 @@ func (c *DummyCommandableHttpClient) GetDummies(ctx context.Context, filter cque
 		return *cquery.NewEmptyDataPage[tsample.Dummy](), err
 	}
 
-	return clients.HandleHttpResponse[cquery.DataPage[tsample.Dummy]](response, utils.ContextHelper.GetTraceId(ctx))
+	return clients.HandleHttpResponse[cquery.DataPage[tsample.Dummy]](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyCommandableHttpClient) GetDummyById(ctx context.Context, dummyId string) (tsample.Dummy, error) {
@@ -42,7 +42,7 @@ func (c *DummyCommandableHttpClient) GetDummyById(ctx context.Context, dummyId s
 		return tsample.Dummy{}, err
 	}
 
-	return clients.HandleHttpResponse[tsample.Dummy](response, utils.ContextHelper.GetClient(ctx))
+	return clients.HandleHttpResponse[tsample.Dummy](response, cctx.GetClient(ctx))
 }
 
 func (c *DummyCommandableHttpClient) CreateDummy(ctx context.Context, dummy tsample.Dummy) (result tsample.Dummy, err error) {
@@ -54,7 +54,7 @@ func (c *DummyCommandableHttpClient) CreateDummy(ctx context.Context, dummy tsam
 		return tsample.Dummy{}, err
 	}
 
-	return clients.HandleHttpResponse[tsample.Dummy](response, utils.ContextHelper.GetClient(ctx))
+	return clients.HandleHttpResponse[tsample.Dummy](response, cctx.GetClient(ctx))
 }
 
 func (c *DummyCommandableHttpClient) UpdateDummy(ctx context.Context, dummy tsample.Dummy) (result tsample.Dummy, err error) {
@@ -66,7 +66,7 @@ func (c *DummyCommandableHttpClient) UpdateDummy(ctx context.Context, dummy tsam
 		return tsample.Dummy{}, err
 	}
 
-	return clients.HandleHttpResponse[tsample.Dummy](response, utils.ContextHelper.GetClient(ctx))
+	return clients.HandleHttpResponse[tsample.Dummy](response, cctx.GetClient(ctx))
 }
 
 func (c *DummyCommandableHttpClient) DeleteDummy(ctx context.Context, dummyId string) (result tsample.Dummy, err error) {
@@ -78,7 +78,7 @@ func (c *DummyCommandableHttpClient) DeleteDummy(ctx context.Context, dummyId st
 		return tsample.Dummy{}, err
 	}
 
-	return clients.HandleHttpResponse[tsample.Dummy](response, utils.ContextHelper.GetClient(ctx))
+	return clients.HandleHttpResponse[tsample.Dummy](response, cctx.GetClient(ctx))
 }
 
 func (c *DummyCommandableHttpClient) CheckTraceId(ctx context.Context) (result map[string]string, err error) {
@@ -90,7 +90,7 @@ func (c *DummyCommandableHttpClient) CheckTraceId(ctx context.Context) (result m
 		return nil, err
 	}
 
-	return clients.HandleHttpResponse[map[string]string](response, utils.ContextHelper.GetClient(ctx))
+	return clients.HandleHttpResponse[map[string]string](response, cctx.GetClient(ctx))
 }
 
 func (c *DummyCommandableHttpClient) CheckErrorPropagation(ctx context.Context) error {

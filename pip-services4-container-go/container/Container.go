@@ -10,7 +10,6 @@ import (
 	cconfig "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-container-go/build"
 	"github.com/pip-services4/pip-services4-go/pip-services4-container-go/config"
 	"github.com/pip-services4/pip-services4-go/pip-services4-container-go/refer"
@@ -219,7 +218,7 @@ func (c *Container) Open(ctx context.Context) error {
 
 	if c.References != nil {
 		return cerr.NewInvalidStateError(
-			utils.ContextHelper.GetTraceId(ctx), "ALREADY_OPENED", "Container was already opened",
+			cctx.GetTraceId(ctx), "ALREADY_OPENED", "Container was already opened",
 		)
 	}
 

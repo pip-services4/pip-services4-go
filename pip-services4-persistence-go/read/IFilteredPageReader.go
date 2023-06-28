@@ -3,7 +3,7 @@ package read
 import (
 	"context"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 )
 
 // IFilteredPageReader is interface for data processing components
@@ -21,5 +21,5 @@ type IFilteredPageReader[T any] interface {
 	//		- sort data.SortParams sort parameters
 	//	Returns: data.DataPage[T], error list of items or error.
 	GetPageByFilter(ctx context.Context,
-		filter cdata.FilterParams, paging cdata.PagingParams, sort cdata.SortParams) (page cdata.DataPage[T], err error)
+		filter cquery.FilterParams, paging cquery.PagingParams, sort cquery.SortParams) (page cquery.DataPage[T], err error)
 }

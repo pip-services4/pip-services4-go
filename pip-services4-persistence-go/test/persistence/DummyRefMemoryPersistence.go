@@ -3,7 +3,7 @@ package test_persistence
 import (
 	"context"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cpersist "github.com/pip-services4/pip-services4-go/pip-services4-persistence-go/persistence"
 )
 
@@ -19,7 +19,7 @@ func NewDummyRefMemoryPersistence() *DummyRefMemoryPersistence {
 	}
 }
 
-func (c *DummyRefMemoryPersistence) GetPageByFilter(ctx context.Context, filter cdata.FilterParams, paging cdata.PagingParams) (page cdata.DataPage[*DummyRef], err error) {
+func (c *DummyRefMemoryPersistence) GetPageByFilter(ctx context.Context, filter cquery.FilterParams, paging cquery.PagingParams) (page cquery.DataPage[*DummyRef], err error) {
 
 	var key string
 
@@ -43,7 +43,7 @@ func (c *DummyRefMemoryPersistence) GetPageByFilter(ctx context.Context, filter 
 		)
 }
 
-func (c *DummyRefMemoryPersistence) GetCountByFilter(ctx context.Context, filter cdata.FilterParams) (count int64, err error) {
+func (c *DummyRefMemoryPersistence) GetCountByFilter(ctx context.Context, filter cquery.FilterParams) (count int64, err error) {
 
 	var key string
 

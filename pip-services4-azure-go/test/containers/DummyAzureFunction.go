@@ -12,8 +12,8 @@ import (
 	azureutil "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/utils"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
@@ -54,7 +54,7 @@ func (c *DummyAzureFunction) getPageByFilter(res http.ResponseWriter, req *http.
 	delete(params, "take")
 	delete(params, "total")
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.GetPageByFilter(
 		ctx,
 		cdata.NewFilterParamsFromValue(params),
@@ -78,7 +78,7 @@ func (c *DummyAzureFunction) getOneById(res http.ResponseWriter, req *http.Reque
 
 	defer req.Body.Close()
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.GetOneById(ctx, body["dummy_id"])
 
 	httpctrl.HttpResponseSender.SendResult(res, req, result, err)
@@ -95,7 +95,7 @@ func (c *DummyAzureFunction) create(res http.ResponseWriter, req *http.Request) 
 		return
 	}
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.Create(ctx, dummy)
 
 	httpctrl.HttpResponseSender.SendCreatedResult(res, req, result, err)
@@ -112,7 +112,7 @@ func (c *DummyAzureFunction) update(res http.ResponseWriter, req *http.Request) 
 		return
 	}
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.Update(ctx, dummy)
 	httpctrl.HttpResponseSender.SendResult(res, req, result, err)
 }
@@ -133,7 +133,7 @@ func (c *DummyAzureFunction) deleteById(res http.ResponseWriter, req *http.Reque
 
 	dummyId := body["dummy_id"]
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.DeleteById(ctx, dummyId)
 	httpctrl.HttpResponseSender.SendDeletedResult(res, req, result, err)
 }

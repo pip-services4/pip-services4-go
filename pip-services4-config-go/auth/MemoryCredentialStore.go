@@ -5,7 +5,7 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // MemoryCredentialStore Credential store that keeps credentials in memory.
@@ -120,5 +120,5 @@ func (c *MemoryCredentialStore) Lookup(ctx context.Context,
 	}
 
 	return nil, errors.NewConfigError(
-		utils.ContextHelper.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param: "+key)
+		cctx.GetTraceId(ctx), "MISSING_CREDENTIALS", "missing credential param: "+key)
 }

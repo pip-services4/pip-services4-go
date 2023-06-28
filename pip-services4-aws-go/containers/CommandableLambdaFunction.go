@@ -3,8 +3,8 @@ package containers
 import (
 	"context"
 
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccomands "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
 
@@ -81,7 +81,7 @@ func (c *CommandableLambdaFunction) registerCommandSet(commandSet *ccomands.Comm
 
 			args := cexec.NewParametersFromValue(params)
 			timing := c.Instrument(
-				utils.ContextHelper.NewContextWithTraceId(context.Background(), traceId),
+				cctx.NewContextWithTraceId(context.Background(), traceId),
 				c.Info().Name+"."+command.Name())
 			result, errRes := command.Execute(ctx, args)
 			timing.EndTiming(ctx, errRes)

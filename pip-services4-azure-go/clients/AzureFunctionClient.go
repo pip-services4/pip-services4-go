@@ -14,8 +14,8 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ckeys "github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -67,7 +67,7 @@ import (
 //			response, err := c.Call(ctx, "get_data", data.NewAnyValueMapFromTuples("id", dummyId))
 //
 //			defer timing.EndTiming(ctx, err)
-//			return rpcclients.HandleHttpResponse[MyData](response, utils.ContextHelper.GetTraceId(ctx))
+//			return rpcclients.HandleHttpResponse[MyData](response, cctx.GetTraceId(ctx))
 //		}
 //
 //		...
@@ -201,7 +201,7 @@ func (c *AzureFunctionClient) Open(ctx context.Context) error {
 
 	if c.Client == nil {
 		return cerr.NewConnectionError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"CANNOT_CONNECT",
 			"Connection to Azure function service failed",
 		).WithDetails("url", c.Uri)
@@ -234,7 +234,7 @@ func (c *AzureFunctionClient) Close(ctx context.Context) error {
 // Returns action result.
 func (c *AzureFunctionClient) Call(ctx context.Context, cmd string,
 	args *cdata.AnyValueMap) (*http.Response, error) {
-	traceId := utils.ContextHelper.GetClient(ctx)
+	traceId := cctx.GetClient(ctx)
 	if cmd == "" {
 		cerr.NewUnknownError(traceId, "NO_COMMAND", "Cmd parameter is missing")
 	}
@@ -370,7 +370,7 @@ func (c *AzureFunctionClient) prepareRequest(ctx context.Context,
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, cerr.NewUnknownError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"UNSUPPORTED_METHOD",
 			"Method is not supported by Azure client",
 		).WithDetails("verb", method).WithCause(err)

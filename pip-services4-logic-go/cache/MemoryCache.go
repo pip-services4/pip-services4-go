@@ -8,7 +8,7 @@ import (
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // MemoryCache that stores values in the process memory.
@@ -107,7 +107,7 @@ func (c *MemoryCache[T]) Retrieve(ctx context.Context, key string) (T, error) {
 
 	if key == "" {
 		return defaultValue, errors.NewInvalidStateError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"INVALID_KEY",
 			"key can not be empty string",
 		)
@@ -146,7 +146,7 @@ func (c *MemoryCache[T]) Store(ctx context.Context,
 
 	if key == "" {
 		return value, errors.NewInvalidStateError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"INVALID_KEY",
 			"key can not be empty string",
 		)
@@ -189,7 +189,7 @@ func (c *MemoryCache[T]) Remove(ctx context.Context, key string) error {
 
 	if key == "" {
 		return errors.NewInvalidStateError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"INVALID_KEY",
 			"key can not be empty string",
 		)

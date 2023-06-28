@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	tsample "github.com/pip-services4/pip-services4-go/pip-services4-http-go/test/sample"
 	"github.com/stretchr/testify/assert"
@@ -24,7 +24,7 @@ func (c *DummyClientFixture) TestCrudOperations(t *testing.T) {
 	dummy1 := tsample.Dummy{Id: "", Key: "Key 1", Content: "Content 1"}
 	dummy2 := tsample.Dummy{Id: "", Key: "Key 2", Content: "Content 2"}
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), "ClientFixture")
+	ctx := cctx.NewContextWithTraceId(context.Background(), "ClientFixture")
 
 	// Create one dummy
 	dummy, err := c.client.CreateDummy(ctx, dummy1)
@@ -67,7 +67,7 @@ func (c *DummyClientFixture) TestCrudOperations(t *testing.T) {
 	assert.Equal(t, tsample.Dummy{}, dummy)
 
 	// Check trace id propagation
-	ctx = utils.ContextHelper.NewContextWithTraceId(context.Background(), "test_trace_id")
+	ctx = cctx.NewContextWithTraceId(context.Background(), "test_trace_id")
 
 	values, err := c.client.CheckTraceId(ctx)
 	assert.Nil(t, err)
@@ -78,7 +78,7 @@ func (c *DummyClientFixture) TestCrudOperations(t *testing.T) {
 	assert.Equal(t, values["traceId"], "test_trace_id")
 
 	// Check error propagation
-	ctx = utils.ContextHelper.NewContextWithTraceId(context.Background(), "test_error_propagation")
+	ctx = cctx.NewContextWithTraceId(context.Background(), "test_error_propagation")
 
 	err = c.client.CheckErrorPropagation(ctx)
 	appErr, ok := err.(*cerr.ApplicationError)

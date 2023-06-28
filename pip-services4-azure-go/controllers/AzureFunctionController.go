@@ -12,8 +12,8 @@ import (
 	azureutil "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/utils"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -73,7 +73,7 @@ type IAzureFunctionServiceOverrides interface {
 //
 //					err := AzureFunctionRequestHelper.DecodeBody(r, &body)
 //					defer r.Body.Close()
-//					ctx := utils.ContextHelper.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
+//					ctx := cctx.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
 //					result, err := c.controller.DeleteById(
 //						ctx,
 //						body,
@@ -249,7 +249,7 @@ func (c *AzureFunctionController) ApplyValidation(schema *cvalid.Schema, action 
 					msg := cconv.StringConverter.ToString(r)
 					err = errors.New(msg)
 				}
-				ctx := utils.ContextHelper.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
+				ctx := cctx.NewContextWithTraceId(r.Context(), c.GetTraceId(r))
 				c.Logger.Error(ctx, err, "http handler panics with error")
 			}
 		}()

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -50,7 +51,7 @@ func (c *DummyPersistenceFixture) TestCrudOperations(t *testing.T) {
 	assert.Equal(t, c.dummy2.Content, dummy2.Content)
 
 	page, errp := c.persistence.GetPageByFilter(context.Background(),
-		*cdata.NewEmptyFilterParams(), *cdata.NewEmptyPagingParams())
+		*cquery.NewEmptyFilterParams(), *cquery.NewEmptyPagingParams())
 	if errp != nil {
 		t.Errorf("GetPageByFilter method error %v", err)
 	}
@@ -63,7 +64,7 @@ func (c *DummyPersistenceFixture) TestCrudOperations(t *testing.T) {
 	assert.Equal(t, page.Data[1].Key, dummy1.Key)
 
 	page, errp = c.persistence.GetPageByFilter(context.Background(),
-		*cdata.NewEmptyFilterParams(), *cdata.NewPagingParams(10, 1, false))
+		*cquery.NewEmptyFilterParams(), *cquery.NewPagingParams(10, 1, false))
 	if errp != nil {
 		t.Errorf("GetPageByFilter method error %v", err)
 	}
@@ -72,7 +73,7 @@ func (c *DummyPersistenceFixture) TestCrudOperations(t *testing.T) {
 	assert.Len(t, page.Data, 0)
 
 	// Get count
-	count, errc := c.persistence.GetCountByFilter(context.Background(), *cdata.NewEmptyFilterParams())
+	count, errc := c.persistence.GetCountByFilter(context.Background(), *cquery.NewEmptyFilterParams())
 	assert.Nil(t, errc)
 	assert.Equal(t, count, int64(2))
 

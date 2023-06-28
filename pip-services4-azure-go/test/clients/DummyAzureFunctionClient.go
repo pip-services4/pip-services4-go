@@ -6,7 +6,7 @@ import (
 	azureclient "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/clients"
 	tdata "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/test/data"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/clients"
 )
@@ -30,7 +30,7 @@ func (c *DummyAzureFunctionClient) GetDummies(ctx context.Context, filter cquery
 	}
 
 	defer timing.EndTiming(ctx, err)
-	return httpctrl.HandleHttpResponse[cquery.DataPage[tdata.Dummy]](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpctrl.HandleHttpResponse[cquery.DataPage[tdata.Dummy]](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyAzureFunctionClient) GetDummyById(ctx context.Context, dummyId string) (result tdata.Dummy, err error) {
@@ -43,7 +43,7 @@ func (c *DummyAzureFunctionClient) GetDummyById(ctx context.Context, dummyId str
 
 	defer timing.EndTiming(ctx, err)
 	if response != nil {
-		return httpctrl.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+		return httpctrl.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 	}
 
 	return tdata.Dummy{}, nil
@@ -59,7 +59,7 @@ func (c *DummyAzureFunctionClient) CreateDummy(ctx context.Context, dummy tdata.
 	}
 
 	defer timing.EndTiming(ctx, err)
-	return httpctrl.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpctrl.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyAzureFunctionClient) UpdateDummy(ctx context.Context, dummy tdata.Dummy) (result tdata.Dummy, err error) {
@@ -71,7 +71,7 @@ func (c *DummyAzureFunctionClient) UpdateDummy(ctx context.Context, dummy tdata.
 	}
 
 	defer timing.EndTiming(ctx, err)
-	return httpctrl.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpctrl.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyAzureFunctionClient) DeleteDummy(ctx context.Context, dummyId string) (result tdata.Dummy, err error) {
@@ -83,5 +83,5 @@ func (c *DummyAzureFunctionClient) DeleteDummy(ctx context.Context, dummyId stri
 	}
 
 	defer timing.EndTiming(ctx, err)
-	return httpctrl.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpctrl.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }

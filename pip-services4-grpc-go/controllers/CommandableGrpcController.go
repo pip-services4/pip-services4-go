@@ -3,8 +3,8 @@ package controllers
 import (
 	"context"
 
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crun "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccomands "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
 
@@ -94,7 +94,7 @@ func (c *CommandableGrpcController) Register() {
 	}
 	controller, ok := resCtrl.(ccomands.ICommandable)
 	if !ok {
-		c.Logger.Error(utils.ContextHelper.NewContextWithTraceId(context.Background(), "CommandableHttpController"),
+		c.Logger.Error(cctx.NewContextWithTraceId(context.Background(), "CommandableHttpController"),
 			nil, "Can't cast Controller to ICommandable")
 		return
 	}

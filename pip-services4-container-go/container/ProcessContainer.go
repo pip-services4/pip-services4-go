@@ -13,7 +13,6 @@ import (
 	cconfig "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
 
@@ -186,7 +185,7 @@ func (c *ProcessContainer) Run(ctx context.Context, args []string) {
 	ctx, _ = cctx.AddShutdownChanToContext(ctx, c.feedbackChan)
 	ctx, _ = cctx.AddErrShutdownChanToContext(ctx, c.feedbackWithErrorChan)
 
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, c.Info().Name)
+	ctx = cctx.NewContextWithTraceId(ctx, c.Info().Name)
 	path := c.getConfigPath(args)
 	parameters := c.getParameters(args)
 

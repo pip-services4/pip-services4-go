@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	tdata "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/test/data"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	"github.com/stretchr/testify/assert"
 )
@@ -20,7 +20,7 @@ func NewDummyClientFixture(client IDummyClient) *DummyClientFixture {
 }
 
 func (c *DummyClientFixture) TestCrudOperations(t *testing.T) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), "ClientFixture")
+	ctx := cctx.NewContextWithTraceId(context.Background(), "ClientFixture")
 	dummy1 := tdata.Dummy{Id: "", Key: "Key 1", Content: "Content 1"}
 	dummy2 := tdata.Dummy{Id: "", Key: "Key 2", Content: "Content 2"}
 

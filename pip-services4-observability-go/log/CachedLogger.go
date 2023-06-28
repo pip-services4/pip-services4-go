@@ -7,7 +7,7 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // ICachedLogSaver abstract logger that caches captured log messages
@@ -97,7 +97,7 @@ func (c *CachedLogger) Write(ctx context.Context, level LevelType, err error, me
 		Level:   level,
 		Source:  c.source,
 		Message: message,
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 	}
 
 	if err != nil {

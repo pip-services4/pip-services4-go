@@ -9,8 +9,8 @@ import (
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
@@ -65,7 +65,7 @@ func (c *DummyRestController) incrementNumberOfCalls(res http.ResponseWriter, re
 func (c *DummyRestController) getPageByFilter(res http.ResponseWriter, req *http.Request) {
 	params := req.URL.Query()
 	paginParams := make(map[string]string, 0)
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 
 	paginParams["skip"] = params.Get("skip")
 	paginParams["take"] = params.Get("take")
@@ -85,7 +85,7 @@ func (c *DummyRestController) getPageByFilter(res http.ResponseWriter, req *http
 
 func (c *DummyRestController) getOneById(res http.ResponseWriter, req *http.Request) {
 	params := req.URL.Query()
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 
 	dummyId := params.Get("dummy_id")
 	if dummyId == "" {
@@ -117,7 +117,7 @@ func (c *DummyRestController) create(res http.ResponseWriter, req *http.Request)
 	}
 
 	result, err := c.service.Create(
-		utils.ContextHelper.NewContextWithTraceId(req.Context(), traceId),
+		cctx.NewContextWithTraceId(req.Context(), traceId),
 		dummy,
 	)
 	c.SendCreatedResult(res, req, result, err)
@@ -143,14 +143,14 @@ func (c *DummyRestController) update(res http.ResponseWriter, req *http.Request)
 		return
 	}
 	result, err := c.service.Update(
-		utils.ContextHelper.NewContextWithTraceId(req.Context(), traceId),
+		cctx.NewContextWithTraceId(req.Context(), traceId),
 		dummy,
 	)
 	c.SendResult(res, req, result, err)
 }
 
 func (c *DummyRestController) deleteById(res http.ResponseWriter, req *http.Request) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	params := req.URL.Query()
 
 	dummyId := params.Get("dummy_id")
@@ -166,19 +166,19 @@ func (c *DummyRestController) deleteById(res http.ResponseWriter, req *http.Requ
 }
 
 func (c *DummyRestController) checkTraceId(res http.ResponseWriter, req *http.Request) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	result, err := c.service.CheckTraceId(ctx)
 	c.SendResult(res, req, result, err)
 }
 
 func (c *DummyRestController) checkErrorPropagation(res http.ResponseWriter, req *http.Request) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	err := c.service.CheckErrorPropagation(ctx)
 	c.SendError(res, req, err)
 }
 
 func (c *DummyRestController) checkGracefulShutdownContext(res http.ResponseWriter, req *http.Request) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(req.Context(), c.GetTraceId(req))
 	err := c.service.CheckGracefulShutdownContext(ctx)
 	c.SendError(res, req, err)
 }

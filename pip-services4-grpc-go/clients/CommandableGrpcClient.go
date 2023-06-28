@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	grpcproto "github.com/pip-services4/pip-services4-go/pip-services4-grpc-go/protos"
 )
 
@@ -88,7 +88,7 @@ func NewCommandableGrpcClient(name string) *CommandableGrpcClient {
 // Retruns: result or error.
 func (c *CommandableGrpcClient) CallCommand(ctx context.Context, name string, params *cdata.AnyValueMap) (result *grpcproto.InvokeReply, err error) {
 	method := c.Name + "." + name
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	timing := c.Instrument(ctx, method)
 
 	var jsonArgs string

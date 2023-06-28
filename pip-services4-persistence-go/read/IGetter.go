@@ -3,7 +3,7 @@ package read
 import (
 	"context"
 
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
+	cdata "github.com/pip-services4/pip-services4-go/pip-services4-data-go/data"
 )
 
 // IGetter Interface for data processing components that can get data items.

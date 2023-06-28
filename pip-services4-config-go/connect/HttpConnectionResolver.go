@@ -7,8 +7,8 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cauth "github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
 )
 
@@ -81,7 +81,7 @@ func (c *HttpConnectionResolver) SetReferences(ctx context.Context, references c
 }
 
 func (c *HttpConnectionResolver) validateConnection(ctx context.Context, connection *ConnectionParams, credential *cauth.CredentialParams) error {
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	if connection == nil {
 		return cerr.NewConfigError(traceId, "NO_CONNECTION", "HTTP connection is not set")
 	}

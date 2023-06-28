@@ -6,7 +6,7 @@ import (
 	azureclient "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/clients"
 	tdata "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/test/data"
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	httpclient "github.com/pip-services4/pip-services4-go/pip-services4-http-go/clients"
 )
@@ -31,7 +31,7 @@ func (c *DummyCommandableAzureFunctionClient) GetDummies(ctx context.Context, fi
 		return *cquery.NewEmptyDataPage[tdata.Dummy](), err
 	}
 
-	return httpclient.HandleHttpResponse[cquery.DataPage[tdata.Dummy]](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpclient.HandleHttpResponse[cquery.DataPage[tdata.Dummy]](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyCommandableAzureFunctionClient) GetDummyById(ctx context.Context, dummyId string) (result tdata.Dummy, err error) {
@@ -43,7 +43,7 @@ func (c *DummyCommandableAzureFunctionClient) GetDummyById(ctx context.Context, 
 		return tdata.Dummy{}, err
 	}
 
-	return httpclient.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpclient.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyCommandableAzureFunctionClient) CreateDummy(ctx context.Context, dummy tdata.Dummy) (result tdata.Dummy, err error) {
@@ -55,7 +55,7 @@ func (c *DummyCommandableAzureFunctionClient) CreateDummy(ctx context.Context, d
 		return tdata.Dummy{}, err
 	}
 
-	return httpclient.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpclient.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyCommandableAzureFunctionClient) UpdateDummy(ctx context.Context, dummy tdata.Dummy) (result tdata.Dummy, err error) {
@@ -67,7 +67,7 @@ func (c *DummyCommandableAzureFunctionClient) UpdateDummy(ctx context.Context, d
 		return tdata.Dummy{}, err
 	}
 
-	return httpclient.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpclient.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }
 
 func (c *DummyCommandableAzureFunctionClient) DeleteDummy(ctx context.Context, dummyId string) (result tdata.Dummy, err error) {
@@ -79,5 +79,5 @@ func (c *DummyCommandableAzureFunctionClient) DeleteDummy(ctx context.Context, d
 		return tdata.Dummy{}, err
 	}
 
-	return httpclient.HandleHttpResponse[tdata.Dummy](response, utils.ContextHelper.GetTraceId(ctx))
+	return httpclient.HandleHttpResponse[tdata.Dummy](response, cctx.GetTraceId(ctx))
 }

@@ -9,8 +9,8 @@ import (
 	awsserv "github.com/pip-services4/pip-services4-go/pip-services4-aws-go/controllers"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cproc "github.com/pip-services4/pip-services4-go/pip-services4-container-go/container"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -74,7 +74,7 @@ import (
 //
 //	func (c *MyLambdaFunction) getOneById(ctx context.Context, params map[string]any) (any, error) {
 //		traceId, _ := params["trace_id"].(string)
-//		ctx := utils.ContextHelper.NewContextWithTrace(ctx.Background(), traceId)
+//		ctx := cctx.NewContextWithTrace(ctx.Background(), traceId)
 //		return c.controller.GetOneById(
 //			ctx,
 //			params["mydata_id"].(string),
@@ -237,7 +237,7 @@ func (c *LambdaFunction) InstrumentError(ctx context.Context, name string, errIn
 //   - ctx context.Context	operation context.
 func (c *LambdaFunction) Run(ctx context.Context) error {
 	traceId := c.Info().Name
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, traceId)
+	ctx = cctx.NewContextWithTraceId(ctx, traceId)
 
 	path := c.getConfigPath()
 	parameters := c.getParameters()

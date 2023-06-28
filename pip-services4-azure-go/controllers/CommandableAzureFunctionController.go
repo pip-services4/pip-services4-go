@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	azureutil "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 	ccomand "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 )
@@ -84,7 +84,7 @@ func (c *CommandableAzureFunctionController) Register() {
 
 	service, ok := resCtrl.(ccomand.ICommandable)
 	if !ok {
-		c.Logger.Error(utils.ContextHelper.NewContextWithTraceId(context.Background(), "CommandableHttpService"), nil, "Can't cast Service to ICommandable")
+		c.Logger.Error(cctx.NewContextWithTraceId(context.Background(), "CommandableHttpService"), nil, "Can't cast Service to ICommandable")
 		return
 	}
 
@@ -100,7 +100,7 @@ func (c *CommandableAzureFunctionController) Register() {
 			args := c.GetParameters(r)
 			args.Remove("trace_id")
 
-			ctx := utils.ContextHelper.NewContextWithTraceId(r.Context(), traceId)
+			ctx := cctx.NewContextWithTraceId(r.Context(), traceId)
 			timing := c.Instrument(ctx, name)
 			execRes, execErr := command.Execute(ctx, args)
 			timing.EndTiming(ctx, execErr)

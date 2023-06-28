@@ -8,7 +8,7 @@ import (
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // JsonFilePersister is a persistence component that loads and saves data from/to flat file.
@@ -90,7 +90,7 @@ func (c *JsonFilePersister[T]) Load(ctx context.Context) ([]T, error) {
 	jsonStr, err := ioutil.ReadFile(c.path)
 	if err != nil {
 		return nil, errors.NewFileError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"READ_FAILED",
 			"Failed to read data file: "+c.path).
 			WithCause(err)
@@ -116,12 +116,12 @@ func (c *JsonFilePersister[T]) Load(ctx context.Context) ([]T, error) {
 func (c *JsonFilePersister[T]) Save(ctx context.Context, items []T) error {
 	json, err := c.convertor.ToJson(items)
 	if err != nil {
-		err := errors.NewInternalError(utils.ContextHelper.GetTraceId(ctx), "CAN'T_CONVERT", "Failed convert to JSON")
+		err := errors.NewInternalError(cctx.GetTraceId(ctx), "CAN'T_CONVERT", "Failed convert to JSON")
 		return err
 	}
 	if err := ioutil.WriteFile(c.path, ([]byte)(json), 0777); err != nil {
 		return errors.NewFileError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"WRITE_FAILED",
 			"Failed to write data file: "+c.path).
 			WithCause(err)

@@ -8,8 +8,8 @@ import (
 	"net/http"
 
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ccomands "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 	"goji.io/pattern"
 )
@@ -122,7 +122,7 @@ func (c *CommandableHttpController) Register() {
 	controller, ok := resServ.(ccomands.ICommandable)
 	if !ok {
 		c.Logger.Error(
-			utils.ContextHelper.NewContextWithTraceId(context.Background(), "CommandableHttpController"),
+			cctx.NewContextWithTraceId(context.Background(), "CommandableHttpController"),
 			nil, "Can't cast Controller to ICommandable")
 		return
 	}
@@ -163,7 +163,7 @@ func (c *CommandableHttpController) Register() {
 			}
 
 			traceId := c.GetTraceId(req)
-			ctx := utils.ContextHelper.NewContextWithTraceId(req.Context(), traceId)
+			ctx := cctx.NewContextWithTraceId(req.Context(), traceId)
 			args := cexec.NewParametersFromValue(params)
 			timing := c.Instrument(ctx, c.BaseRoute+"."+command.Name())
 

@@ -7,9 +7,8 @@ import (
 	"os"
 
 	aserv "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/test/controllers"
-
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 func main() {
@@ -20,7 +19,7 @@ func main() {
 		// "service.descriptor", "pip-services-dummies:controller:commandable-azurefunc:default:1.0",
 	)
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), "handler.main")
+	ctx := cctx.NewContextWithTraceId(context.Background(), "handler.main")
 
 	funcContainer := aserv.NewDummyAzureFunction()
 	funcContainer.Configure(ctx, config)

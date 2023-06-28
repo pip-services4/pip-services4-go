@@ -11,8 +11,8 @@ import (
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -309,7 +309,7 @@ func (c *RestController) Close(ctx context.Context) error {
 	}
 
 	if c.Endpoint == nil {
-		return cerr.NewInvalidStateError(utils.ContextHelper.GetTraceId(ctx), "NO_ENDPOINT", "HTTP endpoint is missing")
+		return cerr.NewInvalidStateError(cctx.GetTraceId(ctx), "NO_ENDPOINT", "HTTP endpoint is missing")
 	}
 
 	if c.localEndpoint {
@@ -554,7 +554,7 @@ func (c *RestController) RegisterOpenApiSpecFromFile(path string) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		c.Logger.Error(
-			utils.ContextHelper.NewContextWithTraceId(context.Background(), "RestController"),
+			cctx.NewContextWithTraceId(context.Background(), "RestController"),
 			err,
 			"Can't read swagger file by path %s",
 			path,

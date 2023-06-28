@@ -7,9 +7,9 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crun "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
@@ -275,7 +275,7 @@ func (c *GrpcController) Close(ctx context.Context) (err error) {
 	}
 
 	if c.Endpoint == nil {
-		return cerr.NewInvalidStateError(utils.ContextHelper.GetTraceId(ctx), "NO_Endpoint", "HTTP endpoint is missing")
+		return cerr.NewInvalidStateError(cctx.GetTraceId(ctx), "NO_Endpoint", "HTTP endpoint is missing")
 	}
 
 	if c.localEndpoint {

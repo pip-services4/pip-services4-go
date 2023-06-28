@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 	"github.com/stretchr/testify/assert"
 )
@@ -42,7 +42,7 @@ func (c *LoggerFixture) TestSimpleLogging(t *testing.T) {
 }
 
 func (c *LoggerFixture) TestErrorLogging(t *testing.T) {
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), "123")
+	ctx := cctx.NewContextWithTraceId(context.Background(), "123")
 	var ex error = errors.New("Testing error throw")
 	c.logger.Fatal(ctx, ex, "Fatal error")
 	c.logger.Error(ctx, ex, "Recoverable error")

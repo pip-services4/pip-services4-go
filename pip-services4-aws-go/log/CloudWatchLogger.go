@@ -14,7 +14,6 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
 
@@ -351,7 +350,7 @@ func (c *CloudWatchLogger) Save(ctx context.Context, messages []clog.LogMessage)
 		putRes, putErr := c.client.PutLogEvents(params)
 		if putErr != nil {
 			if c.logger != nil {
-				c.logger.Error(utils.ContextHelper.NewContextWithTraceId(ctx, "cloudwatch_logger"), putErr, "putLogEvents error")
+				c.logger.Error(cctx.NewContextWithTraceId(ctx, "cloudwatch_logger"), putErr, "putLogEvents error")
 			}
 		} else {
 			if putRes.NextSequenceToken != nil {

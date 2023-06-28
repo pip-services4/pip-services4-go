@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // ConsoleLogger is a logger that writes log messages to console.
@@ -52,7 +52,7 @@ func (c *ConsoleLogger) Write(ctx context.Context, level LevelType, err error, m
 	if c.Level() < level {
 		return
 	}
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 
 	if traceId == "" {
 		traceId = "---"

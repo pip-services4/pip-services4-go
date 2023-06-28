@@ -8,9 +8,9 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cexec "github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	rpccon "github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -195,7 +195,7 @@ func (c *GrpcEndpoint) Open(ctx context.Context) (err error) {
 	// Create instance of express application
 	c.server = grpc.NewServer(opts...)
 	if c.server == nil {
-		return cerr.NewConnectionError(utils.ContextHelper.GetTraceId(ctx), "CAN'T_CREATE_SRV", "Opening GRPC controller failed").
+		return cerr.NewConnectionError(cctx.GetTraceId(ctx), "CAN'T_CREATE_SRV", "Opening GRPC controller failed").
 			Wrap(err).WithDetails("url", c.uri)
 	}
 
@@ -210,7 +210,7 @@ func (c *GrpcEndpoint) Open(ctx context.Context) (err error) {
 	go func(server *grpc.Server) {
 		servErr := server.Serve(lis)
 		if servErr != nil {
-			err := cerr.NewConnectionError(utils.ContextHelper.GetClient(ctx), "CANNOT_CONNECT", "Opening GRPC controller failed").
+			err := cerr.NewConnectionError(cctx.GetClient(ctx), "CANNOT_CONNECT", "Opening GRPC controller failed").
 				Wrap(servErr).WithDetails("url", c.uri)
 			panic(err)
 		}
@@ -352,7 +352,7 @@ func (c *GrpcEndpoint) invoke(ctx context.Context, request *grpcproto.InvokeRequ
 		}
 	}
 	// Call command action
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, traceId)
+	ctx = cctx.NewContextWithTraceId(ctx, traceId)
 	result, err := action(ctx, args)
 	// Process result and generate response
 	if err != nil {

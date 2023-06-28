@@ -7,8 +7,8 @@ import (
 	awscont "github.com/pip-services4/pip-services4-go/pip-services4-aws-go/containers"
 	awstest "github.com/pip-services4/pip-services4-go/pip-services4-aws-go/test"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 )
@@ -37,7 +37,7 @@ func (c *DummyLambdaFunction) SetReferences(ctx context.Context, references cref
 
 func (c *DummyLambdaFunction) getCtxWithTraceId(ctx context.Context, params map[string]any) context.Context {
 	traceId, _ := params["trace_id"].(string)
-	return utils.ContextHelper.NewContextWithTraceId(ctx, traceId)
+	return cctx.NewContextWithTraceId(ctx, traceId)
 }
 
 func (c *DummyLambdaFunction) getPageByFilter(ctx context.Context, params map[string]any) (any, error) {

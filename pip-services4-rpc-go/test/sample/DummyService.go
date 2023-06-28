@@ -5,7 +5,6 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	ccomand "github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
@@ -116,12 +115,12 @@ func (c *DummyService) DeleteById(ctx context.Context, id string) (result Dummy,
 }
 
 func (c *DummyService) CheckTraceId(ctx context.Context) (result map[string]string, err error) {
-	result = map[string]string{"traceId": utils.ContextHelper.GetTraceId(ctx)}
+	result = map[string]string{"traceId": cctx.GetTraceId(ctx)}
 	return result, nil
 }
 
 func (c *DummyService) CheckErrorPropagation(ctx context.Context) error {
-	return cerr.NewNotFoundError(utils.ContextHelper.GetTraceId(ctx), "NOT_FOUND_TEST", "Not found error")
+	return cerr.NewNotFoundError(cctx.GetTraceId(ctx), "NOT_FOUND_TEST", "Not found error")
 }
 
 func (c *DummyService) CheckGracefulShutdownContext(ctx context.Context) error {

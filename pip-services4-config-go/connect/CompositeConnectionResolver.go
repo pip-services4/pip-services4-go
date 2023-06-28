@@ -5,8 +5,8 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
 )
 
@@ -117,7 +117,7 @@ func (c *CompositeConnectionResolver) Resolve(ctx context.Context) (options *con
 	// Validate if cluster (multiple connections) is supported
 	if err == nil && len(connections) > 0 && !c.ClusterSupported {
 		err = cerr.NewConfigError(
-			utils.ContextHelper.GetTraceId(ctx),
+			cctx.GetTraceId(ctx),
 			"MULTIPLE_CONNECTIONS_NOT_SUPPORTED",
 			"Multiple (cluster) connections are not supported",
 		)
@@ -194,7 +194,7 @@ func (c *CompositeConnectionResolver) Compose(ctx context.Context, connections [
 //		- connection    parameters to be validated
 //	Returns: error or nil if validation was successful
 func (c *CompositeConnectionResolver) ValidateConnection(ctx context.Context, connection *ConnectionParams) error {
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 
 	if connection == nil {
 		return cerr.NewConfigError(traceId, "NO_CONNECTION", "Connection parameters are not set is not set")

@@ -13,8 +13,8 @@ import (
 	awscon "github.com/pip-services4/pip-services4-go/pip-services4-aws-go/connect"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	ckeys "github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
 	clog "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
@@ -221,7 +221,7 @@ func (c *LambdaClient) Close(ctx context.Context) error {
 //
 // Returns           result or error.
 func (c *LambdaClient) Invoke(ctx context.Context, invocationType string, cmd string, args map[string]any) (result *lambda.InvokeOutput, err error) {
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	if cmd == "" {
 		err = cerr.NewUnknownError("", "NO_COMMAND", "Missing cmd")
 		c.Logger.Error(ctx, err, "Failed to call %s", cmd)

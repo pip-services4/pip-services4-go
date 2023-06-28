@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 )
@@ -201,7 +201,7 @@ func (c *CommandSet) AddInterceptor(interceptor ICommandInterceptor) {
 func (c *CommandSet) Execute(ctx context.Context, commandName string, args *exec.Parameters) (result any, err error) {
 	cref := c.FindCommand(commandName)
 
-	traceid := utils.ContextHelper.GetTraceId(ctx)
+	traceid := cctx.GetTraceId(ctx)
 
 	if cref == nil {
 		err := errors.NewBadRequestError(

@@ -9,7 +9,6 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 // ICachedTraceSaver Abstract tracer that caches recorded traces in memory and periodically dumps them.
@@ -107,7 +106,7 @@ func (c *CachedTracer) Write(ctx context.Context, component string, operation st
 		Source:    c.source,
 		Component: component,
 		Operation: operation,
-		TraceId:   utils.ContextHelper.GetTraceId(ctx),
+		TraceId:   cctx.GetTraceId(ctx),
 		Duration:  duration,
 		Error:     *errorDesc,
 	}

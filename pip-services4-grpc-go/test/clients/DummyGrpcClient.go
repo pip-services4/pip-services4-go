@@ -3,7 +3,7 @@ package test_clients
 import (
 	"context"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	grpcclients "github.com/pip-services4/pip-services4-go/pip-services4-grpc-go/clients"
 	testproto "github.com/pip-services4/pip-services4-go/pip-services4-grpc-go/test/protos"
@@ -23,7 +23,7 @@ func NewDummyGrpcClient() *DummyGrpcClient {
 func (c *DummyGrpcClient) GetDummies(ctx context.Context, filter *cquery.FilterParams, paging *cquery.PagingParams) (result *tsample.DummyDataPage, err error) {
 
 	req := &testproto.DummiesPageRequest{
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 	}
 	if filter != nil {
 		req.Filter = filter.Value()
@@ -48,7 +48,7 @@ func (c *DummyGrpcClient) GetDummies(ctx context.Context, filter *cquery.FilterP
 func (c *DummyGrpcClient) GetDummyById(ctx context.Context, dummyId string) (result *tsample.Dummy, err error) {
 
 	req := &testproto.DummyIdRequest{
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 		DummyId: dummyId,
 	}
 
@@ -68,7 +68,7 @@ func (c *DummyGrpcClient) GetDummyById(ctx context.Context, dummyId string) (res
 func (c *DummyGrpcClient) CreateDummy(ctx context.Context, dummy tsample.Dummy) (result *tsample.Dummy, err error) {
 
 	req := &testproto.DummyObjectRequest{
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 		Dummy:   fromDummy(&dummy),
 	}
 
@@ -87,7 +87,7 @@ func (c *DummyGrpcClient) CreateDummy(ctx context.Context, dummy tsample.Dummy) 
 
 func (c *DummyGrpcClient) UpdateDummy(ctx context.Context, dummy tsample.Dummy) (result *tsample.Dummy, err error) {
 	req := &testproto.DummyObjectRequest{
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 		Dummy:   fromDummy(&dummy),
 	}
 	reply := new(testproto.Dummy)
@@ -106,7 +106,7 @@ func (c *DummyGrpcClient) UpdateDummy(ctx context.Context, dummy tsample.Dummy) 
 func (c *DummyGrpcClient) DeleteDummy(ctx context.Context, dummyId string) (result *tsample.Dummy, err error) {
 
 	req := &testproto.DummyIdRequest{
-		TraceId: utils.ContextHelper.GetTraceId(ctx),
+		TraceId: cctx.GetTraceId(ctx),
 		DummyId: dummyId,
 	}
 

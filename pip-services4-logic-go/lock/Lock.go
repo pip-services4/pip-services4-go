@@ -6,7 +6,7 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 type ILockOverrides interface {
@@ -75,7 +75,7 @@ func (c *Lock) AcquireLock(ctx context.Context,
 
 	// Throw exception
 	err := errors.NewConflictError(
-		utils.ContextHelper.GetTraceId(ctx),
+		cctx.GetTraceId(ctx),
 		"LOCK_TIMEOUT",
 		"Acquiring lock "+key+" failed on timeout",
 	).WithDetails("key", key)

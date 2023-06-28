@@ -6,8 +6,8 @@ import (
 
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cauth "github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
 	cconn "github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 	ccount "github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
@@ -133,7 +133,7 @@ func (c *MessageQueue) Open(ctx context.Context) error {
 		return err
 	}
 	if len(connections) == 0 {
-		err = cerr.NewConfigError(utils.ContextHelper.GetTraceId(ctx), "NO_CONNECTION", "Connection parameters are not set")
+		err = cerr.NewConfigError(cctx.GetTraceId(ctx), "NO_CONNECTION", "Connection parameters are not set")
 		return err
 	}
 
@@ -184,7 +184,7 @@ func (c *MessageQueue) CheckOpen(traceId string) error {
 //	Returns: error or nil for success.
 //	see Send
 func (c *MessageQueue) SendAsObject(ctx context.Context, messageType string, message any) (err error) {
-	envelope := NewMessageEnvelopeFromObject(utils.ContextHelper.GetTraceId(ctx), messageType, message)
+	envelope := NewMessageEnvelopeFromObject(cctx.GetTraceId(ctx), messageType, message)
 	return c.Overrides.Send(ctx, envelope)
 }
 

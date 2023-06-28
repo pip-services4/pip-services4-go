@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	grpcservices "github.com/pip-services4/pip-services4-go/pip-services4-grpc-go/controllers"
@@ -80,7 +80,7 @@ func (c *DummyGrpcController) GetDummies(ctx context.Context, req *grpcproto.Dum
 		paging = cquery.NewPagingParams(req.Paging.GetSkip(), req.Paging.GetTake(), req.Paging.GetTotal())
 	}
 	data, err := c.service.GetPageByFilter(
-		utils.ContextHelper.NewContextWithTraceId(context.Background(), req.TraceId),
+		cctx.NewContextWithTraceId(context.Background(), req.TraceId),
 		filter,
 		paging,
 	)
@@ -112,7 +112,7 @@ func (c *DummyGrpcController) GetDummyById(ctx context.Context, req *grpcproto.D
 	// ==================================
 
 	data, err := c.service.GetOneById(
-		utils.ContextHelper.NewContextWithTraceId(context.Background(), req.TraceId),
+		cctx.NewContextWithTraceId(context.Background(), req.TraceId),
 		req.DummyId,
 	)
 	if err != nil {
@@ -140,7 +140,7 @@ func (c *DummyGrpcController) CreateDummy(ctx context.Context, req *grpcproto.Du
 	json.Unmarshal(bytes, &dummy)
 
 	data, err := c.service.Create(
-		utils.ContextHelper.NewContextWithTraceId(context.Background(), req.TraceId),
+		cctx.NewContextWithTraceId(context.Background(), req.TraceId),
 		dummy,
 	)
 
@@ -168,7 +168,7 @@ func (c *DummyGrpcController) UpdateDummy(ctx context.Context, req *grpcproto.Du
 	json.Unmarshal(bytes, &dummy)
 
 	data, err := c.service.Update(
-		utils.ContextHelper.NewContextWithTraceId(context.Background(), req.TraceId),
+		cctx.NewContextWithTraceId(context.Background(), req.TraceId),
 		dummy,
 	)
 
@@ -192,7 +192,7 @@ func (c *DummyGrpcController) DeleteDummyById(ctx context.Context, req *grpcprot
 	}
 
 	data, err := c.service.DeleteById(
-		utils.ContextHelper.NewContextWithTraceId(context.Background(), req.TraceId),
+		cctx.NewContextWithTraceId(context.Background(), req.TraceId),
 		req.DummyId,
 	)
 	if err != nil || data == nil {

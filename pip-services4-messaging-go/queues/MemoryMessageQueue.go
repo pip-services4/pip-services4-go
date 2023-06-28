@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 )
 
 // MemoryMessageQueue Message queue that sends and receives messages within the same process by using shared memory.
@@ -138,7 +138,7 @@ func (c *MemoryMessageQueue) Send(ctx context.Context, envelope *MessageEnvelope
 	c.Lock.Unlock()
 
 	c.Counters.IncrementOne(ctx, "queue."+c.Name()+".sent_messages")
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, envelope.TraceId)
+	ctx = cctx.NewContextWithTraceId(ctx, envelope.TraceId)
 	c.Logger.Debug(ctx, "Sent message %s via %s", envelope.String(), c.Name())
 
 	return nil
@@ -161,7 +161,7 @@ func (c *MemoryMessageQueue) Peek(ctx context.Context) (result *MessageEnvelope,
 	c.Lock.Unlock()
 
 	if message != nil {
-		ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+		ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 		c.Logger.Trace(ctx, "Peeked message %s on %s", message, c.String())
 	}
 
@@ -235,7 +235,7 @@ func (c *MemoryMessageQueue) Receive(ctx context.Context, waitTimeout time.Durat
 
 	if message != nil {
 		c.Counters.IncrementOne(ctx, "queue."+c.Name()+".received_messages")
-		ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+		ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 		c.Logger.Debug(ctx, "Received message %s via %s", message, c.Name())
 	}
 
@@ -269,7 +269,7 @@ func (c *MemoryMessageQueue) RenewLock(ctx context.Context, message *MessageEnve
 	}
 	c.Lock.Unlock()
 
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+	ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 	c.Logger.Trace(ctx, "Renewed lock for message %s at %s", message, c.Name())
 
 	return nil
@@ -294,7 +294,7 @@ func (c *MemoryMessageQueue) Complete(ctx context.Context, message *MessageEnvel
 	message.SetReference(nil)
 	c.Lock.Unlock()
 
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+	ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 	c.Logger.Trace(ctx, "Completed message %s at %s", message, c.Name())
 
 	return nil
@@ -337,7 +337,7 @@ func (c *MemoryMessageQueue) Abandon(ctx context.Context, message *MessageEnvelo
 	c.Logger.Trace(ctx, message.TraceId, "Abandoned message %s at %s", message, c.Name())
 
 	// Add back to message queue
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+	ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 	return c.Send(ctx, message)
 }
 
@@ -361,7 +361,7 @@ func (c *MemoryMessageQueue) MoveToDeadLetter(ctx context.Context, message *Mess
 	c.Lock.Unlock()
 
 	c.Counters.IncrementOne(ctx, "queue."+c.Name()+".dead_messages")
-	ctx = utils.ContextHelper.NewContextWithTraceId(ctx, message.TraceId)
+	ctx = cctx.NewContextWithTraceId(ctx, message.TraceId)
 	c.Logger.Trace(ctx, "Moved to dead message %s at %s", message, c.Name())
 
 	return nil

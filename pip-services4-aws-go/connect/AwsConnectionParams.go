@@ -7,7 +7,7 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cauth "github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
 	cconn "github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 )
@@ -277,7 +277,7 @@ func NewAwsConnectionParamsFromString(line string) *AwsConnectionParams {
 //
 // Returns a ConfigException or null if validation passed successfully.
 func (c *AwsConnectionParams) Validate(ctx context.Context) *cerr.ApplicationError { //ConfigException\
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	arn := c.GetArn()
 	if arn == "arn:aws::::" {
 		return cerr.NewConfigError(

@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/commands"
 	"github.com/stretchr/testify/assert"
 )
@@ -13,7 +13,7 @@ import (
 type TestListener struct{}
 
 func (c *TestListener) OnEvent(ctx context.Context, e commands.IEvent, value *exec.Parameters) {
-	if utils.ContextHelper.GetTraceId(ctx) == "wrongId" {
+	if cctx.GetTraceId(ctx) == "wrongId" {
 		panic("Test error")
 	}
 }

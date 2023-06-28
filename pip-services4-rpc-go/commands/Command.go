@@ -5,8 +5,8 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/exec"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 )
 
@@ -75,7 +75,7 @@ func (c *Command) Name() string {
 //	Returns: (any, error)
 func (c *Command) Execute(ctx context.Context, args *exec.Parameters) (any, error) {
 	if c.schema != nil {
-		if err := c.schema.ValidateAndReturnError(utils.ContextHelper.GetTraceId(ctx), args, false); err != nil {
+		if err := c.schema.ValidateAndReturnError(cctx.GetTraceId(ctx), args, false); err != nil {
 			return nil, err
 		}
 	}
@@ -89,7 +89,7 @@ func (c *Command) Execute(ctx context.Context, args *exec.Parameters) (any, erro
 			if r := recover(); r != nil {
 				tempMessage := convert.StringConverter.ToString(r)
 				tempError := errors.NewInvocationError(
-					utils.ContextHelper.GetTraceId(ctx),
+					cctx.GetTraceId(ctx),
 					"EXEC_FAILED",
 					"Execution "+c.Name()+" failed: "+tempMessage,
 				).WithDetails("command", c.Name())

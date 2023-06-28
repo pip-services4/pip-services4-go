@@ -11,8 +11,8 @@ import (
 	azureutil "github.com/pip-services4/pip-services4-go/pip-services4-azure-go/utils"
 	cconv "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
 	cerr "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	crefer "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 	cquery "github.com/pip-services4/pip-services4-go/pip-services4-data-go/query"
 	cvalid "github.com/pip-services4/pip-services4-go/pip-services4-data-go/validate"
 	httpctrl "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
@@ -54,7 +54,7 @@ func (c *DummyAzureFunctionController) getPageByFilter(res http.ResponseWriter, 
 	delete(params, "take")
 	delete(params, "total")
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
 	result, err := c.service.GetPageByFilter(
 		ctx,
 		cquery.NewFilterParamsFromValue(params),
@@ -78,7 +78,7 @@ func (c *DummyAzureFunctionController) getOneById(res http.ResponseWriter, req *
 
 	defer req.Body.Close()
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
 	result, err := c.service.GetOneById(
 		ctx,
 		body["dummy_id"])
@@ -97,7 +97,7 @@ func (c *DummyAzureFunctionController) create(res http.ResponseWriter, req *http
 		return
 	}
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
 	result, err := c.service.Create(
 		ctx,
 		dummy,
@@ -117,7 +117,7 @@ func (c *DummyAzureFunctionController) update(res http.ResponseWriter, req *http
 		return
 	}
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
 	result, err := c.service.Update(
 		ctx,
 		dummy,
@@ -141,7 +141,7 @@ func (c *DummyAzureFunctionController) deleteById(res http.ResponseWriter, req *
 
 	dummyId := body["dummy_id"]
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
+	ctx := cctx.NewContextWithTraceId(context.Background(), c.GetTraceId(req))
 	result, err := c.service.DeleteById(
 		ctx,
 		dummyId,

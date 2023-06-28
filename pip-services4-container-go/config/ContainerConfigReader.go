@@ -6,7 +6,7 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cconfig "github.com/pip-services4/pip-services4-go/pip-services4-config-go/config"
 )
 
@@ -25,7 +25,7 @@ type _TContainerConfigReader struct{}
 //	Returns: ContainerConfig, error the read container configuration and error
 func (c *_TContainerConfigReader) ReadFromFile(ctx context.Context,
 	path string, parameters *config.ConfigParams) (ContainerConfig, error) {
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	if path == "" {
 		return nil, errors.NewConfigError(traceId, "NO_PATH", "Missing config file path")
 	}

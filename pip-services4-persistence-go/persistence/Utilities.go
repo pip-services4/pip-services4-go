@@ -9,8 +9,8 @@ import (
 
 	"github.com/jinzhu/copier"
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/convert"
-	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	refl "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/reflect"
+	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
 )
 
 func toFieldType(obj any) reflect.Type {
@@ -218,7 +218,7 @@ func GenerateObjectId(item *any) {
 	idField := GetProperty(value, "Id")
 	if idField != nil {
 		if reflect.ValueOf(idField).IsZero() {
-			SetObjectId(item, cdata.IdGenerator.NextLong())
+			SetObjectId(item, keys.IdGenerator.NextLong())
 		}
 	} else {
 		panic("'Id' or 'ID' field doesn't exist")

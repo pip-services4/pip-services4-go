@@ -8,6 +8,9 @@ import (
 	cdata "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/data"
 	refl "github.com/pip-services4/pip-services4-go/pip-services4-commons-go/reflect"
 	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/data"
+	"github.com/pip-services4/pip-services4-go/pip-services4-data-go/keys"
+
 	"github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
 
@@ -382,7 +385,7 @@ func (c *IdentifiableMemoryPersistence[T, K]) isEqualIds(idA, idB any) bool {
 }
 
 func (c *IdentifiableMemoryPersistence[T, K]) getItemId(item any) K {
-	if _item, ok := item.(cdata.IIdentifiable[K]); ok {
+	if _item, ok := item.(data.IIdentifiable[K]); ok {
 		return _item.GetId()
 	}
 
@@ -397,14 +400,14 @@ func (c *IdentifiableMemoryPersistence[T, K]) getItemId(item any) K {
 func (c *IdentifiableMemoryPersistence[T, K]) setItemId(item any, id any) any {
 	newId := id
 	if c.isEmptyId(id) {
-		newId = cdata.IdGenerator.NextLong()
+		newId = keys.IdGenerator.NextLong()
 	}
 	SetObjectId(&item, newId)
 	return item
 }
 
 func (c *IdentifiableMemoryPersistence[T, K]) isEmptyId(id any) bool {
-	if _id, ok := id.(cdata.IIdentifier[K]); ok {
+	if _id, ok := id.(data.IIdentifier[K]); ok {
 		return _id.Empty()
 	}
 

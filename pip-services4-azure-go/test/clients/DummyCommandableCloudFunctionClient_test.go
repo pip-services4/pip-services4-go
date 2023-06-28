@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
 )
 
 func TestDummyCommandableAzureFunctionClient(t *testing.T) {
@@ -37,7 +37,7 @@ func TestDummyCommandableAzureFunctionClient(t *testing.T) {
 	client := NewDummyCommandableAzureFunctionClient()
 	fixture := NewDummyClientFixture(client)
 
-	ctx := utils.ContextHelper.NewContextWithTraceId(context.Background(), "DummyCommandableAzureFunctionClient")
+	ctx := cctx.NewContextWithTraceId(context.Background(), "DummyCommandableAzureFunctionClient")
 	client.Configure(ctx, restConfig)
 	client.SetReferences(ctx, cref.NewEmptyReferences())
 	client.Open(ctx)

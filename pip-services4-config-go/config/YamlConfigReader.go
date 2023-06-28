@@ -7,7 +7,7 @@ import (
 
 	"github.com/pip-services4/pip-services4-go/pip-services4-commons-go/errors"
 	cconfig "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/utils"
+	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	"gopkg.in/yaml.v2"
 )
 
@@ -63,7 +63,7 @@ func NewYamlConfigReader(path string) *YamlConfigReader {
 func (c *YamlConfigReader) ReadObject(ctx context.Context,
 	parameters *cconfig.ConfigParams) (any, error) {
 
-	traceId := utils.ContextHelper.GetTraceId(ctx)
+	traceId := cctx.GetTraceId(ctx)
 	if c.Path() == "" {
 		return nil, errors.NewConfigError(traceId, "NO_PATH", "Missing config file path")
 	}
