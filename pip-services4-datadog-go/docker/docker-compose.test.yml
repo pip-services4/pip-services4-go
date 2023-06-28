@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test
+    image: ${IMAGE:-pipdevs/test}
+    environment:
+      - DATADOG_API_KEY=3eb3355caf628d4689a72084425177ac
