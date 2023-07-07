@@ -6,12 +6,12 @@ This module is a part of the [Pip.Services](http://pipservices.org) polyglot mic
 This module contains components for supporting work with the AWS cloud platform.
 
 The module contains the following packages:
-- [**Build**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/build) - factories for constructing module components
-- [**Clients**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/clients) - client components for working with Lambda AWS
-- [**Connect**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/connect) - components of installation and connection settings
-- [**Container**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/containers) - components for creating containers for Lambda server-side AWS functions
-- [**Count**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/count) - components of working with counters (metrics) with saving data in the CloudWatch AWS service
-- [**Log**](https://godoc.org/github.com/pip-services4/pip-services4-go/pip-services4-aws-go/log) - logging components with saving data in the CloudWatch AWS service
+- **Build** - factories for constructing module components
+- **Clients** - client components for working with Lambda AWS
+- **Connect** - components of installation and connection settings
+- **Container** - components for creating containers for Lambda server-side AWS functions
+- **Count** - components of working with counters (metrics) with saving data in the CloudWatch AWS service
+- **Log** - logging components with saving data in the CloudWatch AWS service
 
 <a name="links"></a> Quick links:
 
