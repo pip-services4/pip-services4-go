@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test
+    image: ${IMAGE:-pipdevs/test}
+    depends_on:
+      - memcached
+    environment:
+      - MEMCACHED_SERVICE_HOST=memcached
+      - MEMCACHED_SERVICE_PORT=11211
+
+  memcached:
+    image: memcached:latest
+    # container_name: memcached
+    # ports:
+    #   - "11211:11211"
