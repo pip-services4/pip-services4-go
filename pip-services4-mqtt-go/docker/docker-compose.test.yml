@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test
+    image: ${IMAGE:-pipdevs/test}
+    depends_on:
+      - mosquitto
+    environment:
+      - MQTT_SERVICE_PORT=1883
+      - MQTT_SERVICE_HOST=mosquitto
+
+  mosquitto:
+    image: toke/mosquitto
+    # container_name: mosquitto
+    # ports:
+    #   - "1883:1883"
+    #   - "9001:9001"
