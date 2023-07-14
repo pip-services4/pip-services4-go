@@ -1,0 +1,9 @@
+{
+  "name": "pip-services4-mongodb-go",
+  "type": "module",
+  "language": "go",
+  "version": "0.0.1",
+  "build": 0,
+  "registry": "pipservices",
+  "artifacts": []
+}
