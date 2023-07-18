@@ -156,7 +156,7 @@ func (c *HttpConnectionResolver) updateConnection(connection *ConnectionParams) 
 // from Discovery service it finds a IDiscovery and resolves the connection there.
 //
 //	Parameters:
-//		- correlationId  string     (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context	transaction id to trace execution through call chain.
 //	Returns: connection *ConnectionParams, credential *cauth.CredentialParams, err error
 //		resolved connection and credential or error.
 func (c *HttpConnectionResolver) Resolve(ctx context.Context) (connection *ConnectionParams, credential *cauth.CredentialParams, err error) {
@@ -182,7 +182,7 @@ func (c *HttpConnectionResolver) Resolve(ctx context.Context) (connection *Conne
 // from Discovery service it finds a IDiscovery and resolves the connection there.
 //
 //	Parameters:
-//		- correlationId  string   (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context   transaction id to trace execution through call chain.
 //	Returns:  connections []*ConnectionParams, credential *cauth.CredentialParams, err error
 //		resolved connections and credential or error.
 func (c *HttpConnectionResolver) ResolveAll(ctx context.Context) (connections []*ConnectionParams, credential *cauth.CredentialParams, err error) {
@@ -212,7 +212,7 @@ func (c *HttpConnectionResolver) ResolveAll(ctx context.Context) (connections []
 // c method can be used for dynamic service discovery.
 //
 //	Parameters:
-//		- correlationId  string   (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context	transaction id to trace execution through call chain.
 //	Returns: error nil if registered connection or error.
 func (c *HttpConnectionResolver) Register(ctx context.Context) error {
 
