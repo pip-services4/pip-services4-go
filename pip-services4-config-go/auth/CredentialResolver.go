@@ -148,8 +148,7 @@ func (c *CredentialResolver) lookupInStores(ctx context.Context,
 // ICredentialStore and lookups credentials there.
 //
 //	Parameters:
-//		- ctx context.Context
-//		-  (optional) transaction id to trace execution through call chain.
+//		- ctx context.Context transaction id to trace execution through call chain.
 //	Returns: *CredentialParams? error
 func (c *CredentialResolver) Lookup(ctx context.Context) (*CredentialParams, error) {
 	if len(c.credentials) == 0 {
