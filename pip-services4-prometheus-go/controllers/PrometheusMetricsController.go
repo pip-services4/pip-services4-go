@@ -1,4 +1,4 @@
-package services
+package controllers
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	pcount "github.com/pip-services4/pip-services4-go/pip-services4-prometheus-go/count"
 )
 
-// PrometheusMetricsService is controller that exposes "/metrics" route for Prometheus to scap performance metrics.
+// PrometheusMetricsController is controller that exposes "/metrics" route for Prometheus to scap performance metrics.
 //
 //	Configuration parameters:
 //
@@ -40,7 +40,7 @@ import (
 // Example
 //
 //	ctx := context.Context()
-//	service := NewPrometheusMetricsService();
+//	service := NewPrometheusMetricsController();
 //	service.Configure(ctx, cconf.NewConfigParamsFromTuples(
 //	    "connection.protocol", "http",
 //	    "connection.host", "localhost",
@@ -50,20 +50,20 @@ import (
 //	err := service.Open(ctx)
 //	if  err == nil {
 //	    fmt.Println("The Prometheus metrics service is accessible at http://localhost:8080/metrics");
-//	    defer service.Close(ctx, "")
+//	    defer service.Close(ctx)
 //	}
-type PrometheusMetricsService struct {
+type PrometheusMetricsController struct {
 	httpctrl.RestController
 	cachedCounters *ccount.CachedCounters
 	source         string
 	instance       string
 }
 
-// NewPrometheusMetricsService are creates a new instance of c service.
-// Returns *PrometheusMetricsService
+// NewPrometheusMetricsController are creates a new instance of c service.
+// Returns *PrometheusMetricsController
 // pointer on new instance
-func NewPrometheusMetricsService() *PrometheusMetricsService {
-	c := &PrometheusMetricsService{}
+func NewPrometheusMetricsController() *PrometheusMetricsController {
+	c := &PrometheusMetricsController{}
 	c.RestController = *httpctrl.InheritRestController(c)
 	c.DependencyResolver.Put(context.Background(), "cached-counters", cref.NewDescriptor("pip-services", "counters", "cached", "*", "1.0"))
 	c.DependencyResolver.Put(context.Background(), "prometheus-counters", cref.NewDescriptor("pip-services", "counters", "prometheus", "*", "1.0"))
@@ -77,7 +77,7 @@ func NewPrometheusMetricsService() *PrometheusMetricsService {
 //		- references cref.IReferences
 //
 // references to locate the component dependencies.
-func (c *PrometheusMetricsService) SetReferences(ctx context.Context, references cref.IReferences) {
+func (c *PrometheusMetricsController) SetReferences(ctx context.Context, references cref.IReferences) {
 	c.RestController.SetReferences(ctx, references)
 
 	resolv := c.DependencyResolver.GetOneOptional("prometheus-counters")
@@ -99,7 +99,7 @@ func (c *PrometheusMetricsService) SetReferences(ctx context.Context, references
 }
 
 // Register method are registers all service routes in HTTP endpoint.
-func (c *PrometheusMetricsService) Register() {
+func (c *PrometheusMetricsController) Register() {
 	c.RegisterRoute("get", "metrics", nil, func(res http.ResponseWriter, req *http.Request) { c.metrics(res, req) })
 }
 
@@ -108,7 +108,7 @@ func (c *PrometheusMetricsService) Register() {
 //	Parameters:
 //		- req   an HTTP request
 //		- res   an HTTP response
-func (c *PrometheusMetricsService) metrics(res http.ResponseWriter, req *http.Request) {
+func (c *PrometheusMetricsController) metrics(res http.ResponseWriter, req *http.Request) {
 
 	var atomicCounters []*ccount.AtomicCounter
 	if c.cachedCounters != nil {
@@ -122,6 +122,6 @@ func (c *PrometheusMetricsService) metrics(res http.ResponseWriter, req *http.Re
 	res.WriteHeader(200)
 	_, wrErr := io.WriteString(res, (string)(body))
 	if wrErr != nil {
-		c.Logger.Error(cctx.NewContextWithTraceId(req.Context(), "PrometheusMetricsService"), wrErr, "Can't write response")
+		c.Logger.Error(cctx.NewContextWithTraceId(req.Context(), "PrometheusMetricsController"), wrErr, "Can't write response")
 	}
 }

@@ -19,7 +19,7 @@ import (
 
 // PrometheusCounters performance counters that send their metrics to Prometheus service.
 //
-// The component is normally used in passive mode conjunction with PrometheusMetricsService.
+// The component is normally used in passive mode conjunction with PrometheusMetricsController.
 // Alternatively when connection parameters are set it can push metrics to Prometheus PushGateway.
 //
 //	Configuration parameters:

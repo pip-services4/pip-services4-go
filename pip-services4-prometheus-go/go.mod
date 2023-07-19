@@ -3,11 +3,11 @@ module github.com/pip-services4/pip-services4-go/pip-services4-prometheus-go
 go 1.20
 
 require (
-	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230718221839-9a99c0eddd41
-	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230718211601-c5e741d55d0e
-	github.com/pip-services4/pip-services4-go/pip-services4-config-go v0.0.0-20230718211601-c5e741d55d0e
-	github.com/pip-services4/pip-services4-go/pip-services4-http-go v0.0.0-20230718221839-9a99c0eddd41
-	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.0-20230718221839-9a99c0eddd41
+	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230718231112-d0389d1314e8
+	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230718231112-d0389d1314e8
+	github.com/pip-services4/pip-services4-go/pip-services4-config-go v0.0.0-20230718231112-d0389d1314e8
+	github.com/pip-services4/pip-services4-go/pip-services4-http-go v0.0.0-20230718231112-d0389d1314e8
+	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.0-20230718231112-d0389d1314e8
 	github.com/stretchr/testify v1.8.4
 )
 

@@ -9,14 +9,14 @@ import (
 	cconf "github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cref "github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
+	pservice "github.com/pip-services4/pip-services4-go/pip-services4-prometheus-go/controllers"
 	pcount "github.com/pip-services4/pip-services4-go/pip-services4-prometheus-go/count"
-	pservice "github.com/pip-services4/pip-services4-go/pip-services4-prometheus-go/services"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPrometheusMetricsService(t *testing.T) {
+func TestPrometheusMetricsController(t *testing.T) {
 	ctx := context.Background()
-	var service *pservice.PrometheusMetricsService
+	var service *pservice.PrometheusMetricsController
 	var counters *pcount.PrometheusCounters
 
 	var restConfig = cconf.NewConfigParamsFromTuples(
@@ -25,7 +25,7 @@ func TestPrometheusMetricsService(t *testing.T) {
 		"connection.port", "3000",
 	)
 
-	service = pservice.NewPrometheusMetricsService()
+	service = pservice.NewPrometheusMetricsController()
 	service.Configure(ctx, restConfig)
 
 	counters = pcount.NewPrometheusCounters()
