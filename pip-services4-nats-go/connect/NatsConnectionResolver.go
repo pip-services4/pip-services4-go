@@ -66,9 +66,9 @@ func (c *NatsConnectionResolver) SetReferences(ctx context.Context, references c
 	c.CredentialResolver.SetReferences(ctx, references)
 }
 
-func (c *NatsConnectionResolver) validateConnection(correlationId string, connection *ccon.ConnectionParams) error {
+func (c *NatsConnectionResolver) validateConnection(traceId string, connection *ccon.ConnectionParams) error {
 	if connection == nil {
-		return cerr.NewConfigError(correlationId, "NO_CONNECTION", "Nats connection is not set")
+		return cerr.NewConfigError(traceId, "NO_CONNECTION", "Nats connection is not set")
 	}
 
 	uri := connection.Uri()
@@ -78,20 +78,20 @@ func (c *NatsConnectionResolver) validateConnection(correlationId string, connec
 
 	protocol := connection.ProtocolWithDefault("nats")
 	if protocol == "" {
-		return cerr.NewConfigError(correlationId, "NO_PROTOCOL", "Connection protocol is not set")
+		return cerr.NewConfigError(traceId, "NO_PROTOCOL", "Connection protocol is not set")
 	}
 	if protocol != "nats" {
-		return cerr.NewConfigError(correlationId, "UNSUPPORTED_PROTOCOL", "The protocol "+protocol+" is not supported")
+		return cerr.NewConfigError(traceId, "UNSUPPORTED_PROTOCOL", "The protocol "+protocol+" is not supported")
 	}
 
 	host := connection.Host()
 	if host == "" {
-		return cerr.NewConfigError(correlationId, "NO_HOST", "Connection host is not set")
+		return cerr.NewConfigError(traceId, "NO_HOST", "Connection host is not set")
 	}
 
 	port := connection.PortWithDefault(4222)
 	if port == 0 {
-		return cerr.NewConfigError(correlationId, "NO_PORT", "Connection port is not set")
+		return cerr.NewConfigError(traceId, "NO_PORT", "Connection port is not set")
 	}
 
 	return nil
@@ -182,7 +182,7 @@ func (c *NatsConnectionResolver) Resolve(ctx context.Context) (*cconf.ConfigPara
 
 // Compose method are composes Nats connection options from connection and credential parameters.
 // Parameters:
-//   - correlationId  string  (optional) transaction id to trace execution through call chain.
+//   - traceId  string  (optional) transaction id to trace execution through call chain.
 //   - connection  *ccon.ConnectionParams    connection parameters
 //   - credential  *cauth.CredentialParams   credential parameters
 //

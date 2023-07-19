@@ -44,7 +44,7 @@ import (
 //			"connection.port", 8080,
 //		));
 //
-//		opnErr := controller.Open(context.Background(), "123")
+//		opnErr := controller.Open(context.Background())
 //		if opnErr == nil {
 //			fmt.Println("The Heartbeat controller is accessible at http://+:8080/ping");
 //		}

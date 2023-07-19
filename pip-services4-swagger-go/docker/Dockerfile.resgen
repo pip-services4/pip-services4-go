@@ -1,0 +1,12 @@
+FROM golang:1.20
+
+RUN go install github.com/rakyll/statik@latest
+
+WORKDIR /app
+
+COPY . ./src
+
+RUN statik -src=./src/swagger-ui -dest=./src -p=resources -f -ns=swagger -include=*.png,*.html,*.js,*.map,*.css,*.yml,*.yaml \
+    && statik -src=./src/example/controllers -dest=./src/example -p=resources -f -ns=example -include=*.png,*.html,*.js,*.map,*.css,*.yml,*.yaml
+
+CMD ["sh", "-c", "echo 'Done.']
