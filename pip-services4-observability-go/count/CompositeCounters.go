@@ -103,7 +103,7 @@ func (c *CompositeCounters) BeginTiming(ctx context.Context, name string) *Count
 func (c *CompositeCounters) EndTiming(ctx context.Context, name string, elapsed float64) {
 	for _, counter := range c.counters {
 		if counter != nil {
-			if callback, ok := counter.(ITimingCallback); ok {
+			if callback, ok := counter.(ICounterTimingCallback); ok {
 				callback.EndTiming(ctx, name, elapsed)
 			}
 		}

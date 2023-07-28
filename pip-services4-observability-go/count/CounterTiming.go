@@ -7,16 +7,18 @@ import (
 
 // CounterTiming callback object returned by ICounters.beginTiming to end timing of
 // execution block and update the associated counter.
+//
 //	Example:
 //		timing := counters.BeginTiming(contex.Background(), "mymethod.exec_time")
 //		defer  timing.EndTiming()
 type CounterTiming struct {
 	start    time.Time
-	callback ITimingCallback
+	callback ICounterTimingCallback
 	counter  string
 }
 
 // NewEmptyCounterTiming creates a new instance of the timing callback object.
+//
 //	Returns: *CounterTiming
 func NewEmptyCounterTiming() *CounterTiming {
 	return &CounterTiming{
@@ -25,11 +27,12 @@ func NewEmptyCounterTiming() *CounterTiming {
 }
 
 // NewCounterTiming creates a new instance of the timing callback object.
+//
 //	Parameters:
 //		- counter string an associated counter name
 //		- callback ITimingCallback a callback that shall be called when EndTiming is called.
 //	Returns: *Timing
-func NewCounterTiming(counter string, callback ITimingCallback) *CounterTiming {
+func NewCounterTiming(counter string, callback ICounterTimingCallback) *CounterTiming {
 	return &CounterTiming{
 		start:    time.Now(),
 		callback: callback,
