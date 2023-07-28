@@ -9,10 +9,10 @@ import (
 	"goji.io/pat"
 )
 
-type OwnerAuthManager struct {
+type OwnerAuthorizer struct {
 }
 
-func (c *OwnerAuthManager) Owner(idParam string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *OwnerAuthorizer) Owner(idParam string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	if idParam == "" {
 		idParam = string(PipAuthUserId)
 	}
@@ -50,7 +50,7 @@ func (c *OwnerAuthManager) Owner(idParam string) func(res http.ResponseWriter, r
 	}
 }
 
-func (c *OwnerAuthManager) OwnerOrAdmin(idParam string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *OwnerAuthorizer) OwnerOrAdmin(idParam string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	if idParam == "" {
 		idParam = string(PipAuthUserId)
 	}

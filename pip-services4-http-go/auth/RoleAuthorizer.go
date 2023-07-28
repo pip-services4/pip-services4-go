@@ -9,10 +9,10 @@ import (
 	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 )
 
-type RoleAuthManager struct {
+type RoleAuthorizer struct {
 }
 
-func (c *RoleAuthManager) UserInRoles(roles []string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *RoleAuthorizer) UserInRoles(roles []string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	return func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 
 		user, ok := req.Context().Value(PipAuthUser).(cdata.AnyValueMap)
@@ -55,10 +55,10 @@ func (c *RoleAuthManager) UserInRoles(roles []string) func(res http.ResponseWrit
 	}
 }
 
-func (c *RoleAuthManager) UserInRole(role string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *RoleAuthorizer) UserInRole(role string) func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	return c.UserInRoles([]string{role})
 }
 
-func (c *RoleAuthManager) Admin() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *RoleAuthorizer) Admin() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	return c.UserInRole(string(PipAuthAdmin))
 }

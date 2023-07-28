@@ -8,16 +8,16 @@ import (
 	services "github.com/pip-services4/pip-services4-go/pip-services4-http-go/controllers"
 )
 
-type BasicAuthManager struct {
+type BasicAuthorizer struct {
 }
 
-func (c *BasicAuthManager) Anybody() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *BasicAuthorizer) Anybody() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	return func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 		next.ServeHTTP(res, req)
 	}
 }
 
-func (c *BasicAuthManager) Signed() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
+func (c *BasicAuthorizer) Signed() func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	return func(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 		_, ok := req.Context().Value(PipAuthUser).(cdata.AnyValueMap)
 		if !ok {
