@@ -24,11 +24,7 @@ type _THttpResponseSender struct {
 //		- res  http.ResponseWriter     a HTTP response object.
 //		- err  error     an error object to be sent.
 func (c *_THttpResponseSender) SendError(res http.ResponseWriter, req *http.Request, err error) {
-
-	appErr := cerr.ApplicationError{
-		Status: 500,
-	}
-	appErr = *appErr.Wrap(err)
+	appErr := cerr.ErrorDescriptionFactory.Create(err)
 	res.Header().Add("Content-Type", "application/json")
 	res.WriteHeader(appErr.Status)
 	jsonObjStr, jsonErr := cconv.JsonConverter.ToJson(appErr)
