@@ -59,14 +59,14 @@ type IGrpcControllerOverrides interface {
 //
 //	func NewMyGrpcController() *MyGrpcController {
 //		c := MyGrpcController{}
-//		c.GrpcController = grpcservices.NewGrpcService("Mydata.Mydatas")
+//		c.GrpcController = grpccontrollers.NewGrpcController("Mydata.Mydatas")
 //		c.GrpcController.IRegisterable = &c
 //		c.numberOfCalls = 0
 //		c.DependencyResolver.Put(context.Context(), "service", cref.NewDescriptor("mygroup", "service", "*", "*", "*"))
 //		return &c
 //	}
 //
-//	func (c*MyGrpcService) SetReferences(ctx context.Context, references: IReferences) {
+//	func (c*MyGrpcController) SetReferences(ctx context.Context, references: IReferences) {
 //		c.service.SetReferences(references);
 //		resolv, err := c.DependencyResolver.GetOneRequired("service")
 //		if err == nil && resolv != nil {
@@ -76,12 +76,12 @@ type IGrpcControllerOverrides interface {
 //		panic("Can't resolve 'service' reference")
 //	}
 //
-//	func (c*MyGrpcService) Register() {
+//	func (c*MyGrpcController) Register() {
 //		protos.RegisterMyDataServer(c.Endpoint.GetServer(), c)
 //		...
 //	}
 //
-//	service := NewMyGrpcService();
+//	service := NewMyGrpcController();
 //	service.Configure(ctx, cconf.NewConfigParamsFromTuples(
 //	    "connection.protocol", "http",
 //	    "connection.host", "localhost",
@@ -116,14 +116,14 @@ type GrpcController struct {
 	Tracer *ctrace.CompositeTracer
 }
 
-// InheritGrpcService methods are creates new instance NewGrpcService
+// InheritGrpcController methods are creates new instance NewGrpcController
 // Parameters:
 //   - overrides a reference to child class that overrides virtual methods
 //   - serviceName string
 //
 // service name from XYZ.pb.go, set "" for use default gRPC commandable protobuf
-// Return *GrpcService
-func InheritGrpcService(overrides IGrpcControllerOverrides, serviceName string) *GrpcController {
+// Return *GrpcController
+func InheritGrpcController(overrides IGrpcControllerOverrides, serviceName string) *GrpcController {
 	c := &GrpcController{
 		Overrides: overrides,
 	}
@@ -220,7 +220,7 @@ func (c *GrpcController) Instrument(ctx context.Context, name string) *rpctrace.
 //		- resIn            (optional) an execution result
 // Returns: result any, err error
 // input result and error
-// func (c *GrpcService) InstrumentError(ctx context.Context, name string, errIn error,
+// func (c *GrpcController) InstrumentError(ctx context.Context, name string, errIn error,
 // 	resIn any) (result any, err error) {
 // 	if errIn != nil {
 // 		c.Logger.Error(ctx, errIn, "Failed to execute %s method", name)

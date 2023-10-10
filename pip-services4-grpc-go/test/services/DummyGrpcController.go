@@ -26,7 +26,7 @@ type DummyGrpcController struct {
 
 func NewDummyGrpcController() *DummyGrpcController {
 	c := &DummyGrpcController{}
-	c.GrpcController = grpcservices.InheritGrpcService(c, "dummies.Dummies")
+	c.GrpcController = grpcservices.InheritGrpcController(c, "dummies.Dummies")
 	c.numberOfCalls = 0
 	c.DependencyResolver.Put(context.Background(), "service", cref.NewDescriptor("pip-services-dummies", "service", "default", "*", "*"))
 	return c

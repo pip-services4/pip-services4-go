@@ -79,7 +79,7 @@ type CommandableGrpcController struct {
 //   - name a service name.
 func InheritCommandableGrpcController(overrides IGrpcControllerOverrides, name string) *CommandableGrpcController {
 	c := &CommandableGrpcController{}
-	c.GrpcController = InheritGrpcService(overrides, "")
+	c.GrpcController = InheritGrpcController(overrides, "")
 	c.name = name
 	c.DependencyResolver.Put(context.Background(), "service", "none")
 	return c
