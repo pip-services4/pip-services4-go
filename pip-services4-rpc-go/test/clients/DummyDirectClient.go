@@ -25,7 +25,7 @@ func NewDummyDirectClient() *DummyDirectClient {
 func (c *DummyDirectClient) SetReferences(ctx context.Context, references cref.IReferences) {
 	c.DirectClient.SetReferences(ctx, references)
 
-	specificController, ok := c.Controller.(test_sample.IDummyService)
+	specificController, ok := c.Service.(test_sample.IDummyService)
 	if !ok {
 		panic("DummyDirectClient: Cant't resolv dependency 'controller' to IDummyController")
 	}

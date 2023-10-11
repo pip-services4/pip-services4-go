@@ -13,7 +13,7 @@ import (
 	"github.com/pip-services4/pip-services4-go/pip-services4-rpc-go/trace"
 )
 
-// DirectClient is abstract client that calls controller directly in the same memory space.
+// DirectClient is abstract client that calls service directly in the same memory space.
 //
 // It is used when multiple microservices are deployed in a single container (monolyth)
 // and communication between them can be done by direct calls rather then through
@@ -21,12 +21,12 @@ import (
 //
 //		Configuration parameters:
 //			- dependencies:
-//				- controller: override controller descriptor
+//				- service: override service descriptor
 //
 //		References:
 //			- *:logger:*:*:1.0         (optional) ILogger components to pass log messages
 //			- *:counters:*:*:1.0       (optional) ICounters components to pass collected measurements
-//			- *:controller:*:*:1.0     controller to call business methods
+//			- *:service:*:*:1.0     service to call business methods
 //
 //		Example:
 //			type MyDirectClient struct {
@@ -35,43 +35,43 @@ import (
 //			func NewMyDirectClient()* MyDirectClient {
 //				c:= MyDirectClient{}
 //				c.DirectClient = NewDirectClient()
-//				c.DependencyResolver.Put(context.Background(), "controller", cref.NewDescriptor(
-//	             "mygroup", "controller", "*", "*", "*"));
+//				c.DependencyResolver.Put(context.Background(), "service", cref.NewDescriptor(
+//	             "mygroup", "service", "*", "*", "*"));
 //				return &c
 //			}
 //
 //			func (c *MyDirectClient) SetReferences(ctx context.Context, references cref.IReferences) {
 //				c.DirectClient.SetReferences(ctx, references)
-//				specificController, ok := c.Controller.(tdata.IMyDataController)
+//				specificService, ok := c.Service.(tdata.IMyDataService)
 //				if !ok {
-//					panic("MyDirectClient: Cant't resolv dependency 'controller' to IMyDataController")
+//					panic("MyDirectClient: Cant't resolv dependency 'service' to IMyDataService")
 //				}
-//				c.specificController = specificController
+//				c.specificService = specificService
 //			}
 //			...
 //			func (c * MyDirectClient) GetData(ctx context.Context, id string)(result MyData, err error) {
 //				timing := c.Instrument(ctx, "myclient.get_data")
 //				defer timing.EndTiming(ctx);
 //
-//				return c.specificController.GetData(ctx, id)
+//				return c.specificService.GetData(ctx, id)
 //			}
 //			...
 //
 //			client = NewMyDirectClient();
 //			client.SetReferences(context.Background(), cref.NewReferencesFromTuples(
-//				cref.NewDescriptor("mygroup","controller","default","default","1.0"), controller,
+//				cref.NewDescriptor("mygroup","service","default","default","1.0"), service,
 //			));
 //			res, err := client.GetData(context.Background(), "123", "1")
 type DirectClient struct {
-	//The controller reference.
-	Controller any
+	//The service reference.
+	Service any
 	//The open flag.
 	Opened bool
 	//The logger.
 	Logger *clog.CompositeLogger
 	//The performance counters
 	Counters *ccount.CompositeCounters
-	//The dependency resolver to get controller reference.
+	//The dependency resolver to get service reference.
 	DependencyResolver *crefer.DependencyResolver
 	// The tracer.
 	Tracer *ctrace.CompositeTracer
@@ -86,7 +86,7 @@ func NewDirectClient() *DirectClient {
 		DependencyResolver: crefer.NewDependencyResolver(),
 		Tracer:             ctrace.NewCompositeTracer(),
 	}
-	dc.DependencyResolver.Put(context.Background(), "controller", "none")
+	dc.DependencyResolver.Put(context.Background(), "service", "none")
 	return &dc
 }
 
@@ -109,11 +109,11 @@ func (c *DirectClient) SetReferences(ctx context.Context, references crefer.IRef
 	c.Counters.SetReferences(ctx, references)
 	c.Tracer.SetReferences(ctx, references)
 	c.DependencyResolver.SetReferences(ctx, references)
-	res, cErr := c.DependencyResolver.GetOneRequired("controller")
+	res, cErr := c.DependencyResolver.GetOneRequired("service")
 	if cErr != nil {
-		panic("DirectClient: Cant't resolv dependency 'controller'")
+		panic("DirectClient: Cant't resolv dependency 'service'")
 	}
-	c.Controller = res
+	c.Service = res
 }
 
 // Instrument method are adds instrumentation to log calls and measure call time.
@@ -166,8 +166,8 @@ func (c *DirectClient) Open(ctx context.Context) error {
 		return nil
 	}
 
-	if c.Controller == nil {
-		err := cerr.NewConnectionError(cctx.GetTraceId(ctx), "NO_CONTROLLER", "Controller reference is missing")
+	if c.Service == nil {
+		err := cerr.NewConnectionError(cctx.GetTraceId(ctx), "NO_SERVICE", "Service reference is missing")
 		return err
 	}
 
