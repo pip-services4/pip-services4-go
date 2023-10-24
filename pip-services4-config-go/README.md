@@ -35,10 +35,10 @@ package main
 import (
 	"context"
 
-	"github.com/pip-services4/pip-services4-go/pip-services3-components-gox/config"
-	"github.com/pip-services4/pip-services4-go/pip-services3-components-gox/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services3-config-gox/auth"
-	"github.com/pip-services4/pip-services4-go/pip-services3-config-gox/connect"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
+	"github.com/pip-services4/pip-services4-go/pip-services4-config-go/auth"
+	"github.com/pip-services4/pip-services4-go/pip-services4-config-go/connect"
 )
 
 func main() {

@@ -122,7 +122,7 @@ Finally, remember to add factories to your container, to allow it creating requi
 ```golang
 ...
 import (
-	cproc "github.com/pip-services3-gox/pip-services3-container-gox/container"
+	cproc "github.com/pip-services4-go/pip-services4-container-go/container"
 	hbuild "github.com/pip-services4/pip-services4-go/pip-services4-http-go/build"
 	sbuild "github.com/pip-services4/pip-services4-go/pip-services4-swagger-go/build"
   ...

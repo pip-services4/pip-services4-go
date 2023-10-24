@@ -54,7 +54,7 @@ Then create a process container and register the factory there. You can also reg
 ```go
 import (
 	"github.com/pip-services4/pip-services4-go/pip-services4-container-go/container"
-	rpcbuild "github.com/pip-services3-gox/pip-services3-rpc-gox/build"
+	rpcbuild "github.com/pip-services4-go/pip-services4-rpc-go/build"
 )
 
 type MyProcess struct {
@@ -71,7 +71,7 @@ func NewMyProcess() *MyProcess {
 }
 ```
 
-Define YAML configuration file with components and their descriptors. The configuration file is pre-processed using [Handlebars templating](https://github.com/pip-services3-gox/pip-services3-expressions-gox) that allows to inject configuration parameters or dynamically include/exclude components using conditional blocks. The values for the templating engine are defined via process command line arguments or via environment variables. Support for environment variables works well in docker or other containers like AWS Lambda functions.
+Define YAML configuration file with components and their descriptors. The configuration file is pre-processed using [Handlebars templating](https://github.com/pip-services4-go/pip-services4-expressions-go) that allows to inject configuration parameters or dynamically include/exclude components using conditional blocks. The values for the templating engine are defined via process command line arguments or via environment variables. Support for environment variables works well in docker or other containers like AWS Lambda functions.
 
 
 ```yml

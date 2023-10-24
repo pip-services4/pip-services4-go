@@ -21,12 +21,12 @@ import (
 // Configuration parameters
 //   - client_id:               (optional) name of the client id
 //   - connection(s):
-//   - discovery_key:               (optional) a key to retrieve the connection from [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/connect.idiscovery.html IDiscovery]]
+//   - discovery_key:               (optional) a key to retrieve the connection from [[https://pip-services4-node.github.io/pip-services4-components-node/interfaces/connect.idiscovery.html IDiscovery]]
 //   - host:                        host name or IP address
 //   - port:                        port number
 //   - uri:                         resource URI or connection string with all parameters in it
 //   - credential(s):
-//   - store_key:                   (optional) a key to retrieve the credentials from [[https://pip-services3-node.github.io/pip-services3-components-node/interfaces/auth.icredentialstore.html ICredentialStore]]
+//   - store_key:                   (optional) a key to retrieve the credentials from [[https://pip-services4-node.github.io/pip-services4-components-node/interfaces/auth.icredentialstore.html ICredentialStore]]
 //   - username:                    user name
 //   - password:                    user password
 //   - options:

@@ -1,9 +1,9 @@
 {
-    "name": "pip-services3-kafka-gox",
+    "name": "pip-services4-kafka-go",
     "type": "module",
     "language": "go",
     "version": "0.0.1",
     "build": 0,
-    "registry": "pipdevs",
+    "registry": "pipservices",
     "artifacts": []
 }

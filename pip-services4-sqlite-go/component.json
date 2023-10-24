@@ -4,6 +4,6 @@
   "language": "go",
   "version": "0.0.1",
   "build": 0,
-  "registry": "pipdevs",
+  "registry": "pipservices",
   "artifacts": []
 }

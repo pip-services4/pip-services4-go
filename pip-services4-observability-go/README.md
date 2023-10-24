@@ -32,10 +32,10 @@ They will pass through calls to loggers and counters that are set in references.
 import (
 	"context"
 
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-gox/config"
-	"github.com/pip-services4/pip-services4-go/pip-services4-components-gox/refer"
-	"github.com/pip-services4/pip-services4-go/pip-services4-observability-gox/count"
-	"github.com/pip-services4/pip-services4-go/pip-services4-observability-gox/log"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/config"
+	"github.com/pip-services4/pip-services4-go/pip-services4-components-go/refer"
+	"github.com/pip-services4/pip-services4-go/pip-services4-observability-go/count"
+	"github.com/pip-services4/pip-services4-go/pip-services4-observability-go/log"
 )
 
 type MyComponent struct {

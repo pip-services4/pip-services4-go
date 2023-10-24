@@ -1,10 +1,10 @@
 {
-    "name":  "pip-services3-memcached-gox",
+    "name":  "pip-services4-memcached-go",
     "type": "module",
     "language": "go",
     "version": "0.0.1",
     "build": 0,
-    "registry": "pipdevs",
+    "registry": "pipservices",
     "artifacts": [
     ]
 }

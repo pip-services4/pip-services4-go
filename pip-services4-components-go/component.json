@@ -1,5 +1,5 @@
 {
-  "name":  "pip-services4-components-gox",
+  "name":  "pip-services4-components-go",
   "type": "module",
   "language": "go",
   "version": "0.0.1",

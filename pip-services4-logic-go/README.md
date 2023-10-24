@@ -34,9 +34,9 @@ package main
 import (
 	"context"
 
-	"github.com/pip-services3-gox/pip-services3-commons-gox/refer"
-	"github.com/pip-services3-gox/pip-services3-components-gox/cache"
-	"github.com/pip-services3-gox/pip-services3-components-gox/lock"
+	"github.com/pip-services4-go/pip-services4-commons-go/refer"
+	"github.com/pip-services4-go/pip-services4-components-go/cache"
+	"github.com/pip-services4-go/pip-services4-components-go/lock"
 )
 
 func main() {
