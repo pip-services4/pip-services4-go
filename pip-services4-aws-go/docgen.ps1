@@ -17,7 +17,7 @@ if (Test-Path "$PSScriptRoot/docs") {
 }
 
 # Build docker image
-docker build -f "$PSScriptRoot/docker/Dockerfile.docs" -t $docImage "$PSScriptRoot/."
+docker build -f "$PSScriptRoot/docker/Dockerfile.docs" -t $docImage $PSScriptRoot
 
 # Run docgen container
 docker run -d --name $container $docImage
