@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-grpc-go/**'
-    - 'pip-services4-grpc-go/!README.md'
+    - '!pip-services4-grpc-go/README.md'
   workflow_dispatch:
 
 env:

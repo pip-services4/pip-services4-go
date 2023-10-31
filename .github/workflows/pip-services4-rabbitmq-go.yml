@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-rabbitmq-go/**'
-    - 'pip-services4-rabbitmq-go/!README.md'
+    - '!pip-services4-rabbitmq-go/README.md'
   workflow_dispatch:
 
 env:

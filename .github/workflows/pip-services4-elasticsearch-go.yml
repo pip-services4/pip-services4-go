@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-elasticsearch-go/**'
-    - 'pip-services4-elasticsearch-go/!README.md'
+    - '!pip-services4-elasticsearch-go/README.md'
   workflow_dispatch:
 
 env:

@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-azure-go/**'
-    - 'pip-services4-azure-go/!README.md'
+    - '!pip-services4-azure-go/README.md'
   workflow_dispatch:
 
 env:

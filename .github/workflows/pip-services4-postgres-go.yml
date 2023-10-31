@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-postgres-go/**'
-    - 'pip-services4-postgres-go/!README.md'
+    - '!pip-services4-postgres-go/README.md'
   workflow_dispatch:
 
 env:

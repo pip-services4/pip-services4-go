@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-redis-go/**'
-    - 'pip-services4-redis-go/!README.md'
+    - '!pip-services4-redis-go/README.md'
   workflow_dispatch:
 
 env:

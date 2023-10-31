@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-mongodb-go/**'
-    - 'pip-services4-mongodb-go/!README.md'
+    - '!pip-services4-mongodb-go/README.md'
   workflow_dispatch:
 
 env:

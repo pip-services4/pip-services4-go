@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-memcached-go/**'
-    - 'pip-services4-memcached-go/!README.md'
+    - '!pip-services4-memcached-go/README.md'
   workflow_dispatch:
 
 env:

@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-mysql-go/**'
-    - 'pip-services4-mysql-go/!README.md'
+    - '!pip-services4-mysql-go/README.md'
   workflow_dispatch:
 
 env:

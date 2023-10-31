@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-expressions-go/**'
-    - 'pip-services4-expressions-go/!README.md'
+    - '!pip-services4-expressions-go/README.md'
   workflow_dispatch:
 
 env:

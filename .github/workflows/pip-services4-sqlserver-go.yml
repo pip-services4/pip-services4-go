@@ -7,7 +7,7 @@ on:
       - main
     paths:
     - 'pip-services4-sqlserver-go/**'
-    - 'pip-services4-sqlserver-go/!README.md'
+    - '!pip-services4-sqlserver-go/README.md'
   workflow_dispatch:
 
 env:
