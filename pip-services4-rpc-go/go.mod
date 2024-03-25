@@ -3,10 +3,10 @@ module github.com/pip-services4/pip-services4-go/pip-services4-rpc-go
 go 1.20
 
 require (
-	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230621145806-1c171a9456a0
-	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230621145806-1c171a9456a0
-	github.com/pip-services4/pip-services4-go/pip-services4-data-go v0.0.0-20230621145806-1c171a9456a0
-	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.0-20230621145806-1c171a9456a0
+	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.1-2
+	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.1-2
+	github.com/pip-services4/pip-services4-go/pip-services4-data-go v0.0.1-2
+	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.1-3
 	github.com/stretchr/testify v1.8.4
 )
 

@@ -18,7 +18,7 @@ type DummyDirectClient struct {
 func NewDummyDirectClient() *DummyDirectClient {
 	ddc := DummyDirectClient{}
 	ddc.DirectClient = *clients.NewDirectClient()
-	ddc.DependencyResolver.Put(context.Background(), "controller", cref.NewDescriptor("pip-services-dummies", "controller", "*", "*", "*"))
+	ddc.DependencyResolver.Put(context.Background(), "service", cref.NewDescriptor("pip-services-dummies", "service", "*", "*", "*"))
 	return &ddc
 }
 

@@ -14,7 +14,7 @@ func TestDummyDirectClient(t *testing.T) {
 	references := cref.NewReferencesFromTuples(
 		context.Background(),
 		cref.NewDescriptor(
-			"pip-services-dummies", "controller", "default",
+			"pip-services-dummies", "service", "default",
 			"default", "1.0",
 		), tsample.NewDummyService(),
 	)
