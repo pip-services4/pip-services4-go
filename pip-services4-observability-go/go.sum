@@ -1,11 +1,9 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
-github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230620094553-fae9ed291e24 h1:gqc3+FKH+jZBw1vAWzQMHlQjKhR3OAb3faJOY4+Y4AI=
-github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230620094553-fae9ed291e24/go.mod h1:LbnlNUywvRiRy2G2mEx/KaVX3DTyMC09D+atqbTIJUg=
-github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230620094553-fae9ed291e24 h1:qYc5a9XEqkDaiWJ1BnmsgnYEbkPSgrXoM19/+GTKy/8=
-github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230620094553-fae9ed291e24/go.mod h1:aaUai6hws7dW2IbpGbKCcTrY9sV2hcU7NehIP4DLhFQ=
+github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.1-2 h1:RVkMACgpjRLaVsw4tSiiQTRlcZr93mE6bWGJVB7Zp8E=
+github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.1-2/go.mod h1:nLoiJ/YX4OYLYPvCk5R32kjpmSRbb8LVHkEMwQQcGTI=
+github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.1-2 h1:iBd1h+A8AdsDZxRM98H14hVIFcJm62OqkS2JqA3Sg2w=
+github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.1-2/go.mod h1:aaUai6hws7dW2IbpGbKCcTrY9sV2hcU7NehIP4DLhFQ=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
