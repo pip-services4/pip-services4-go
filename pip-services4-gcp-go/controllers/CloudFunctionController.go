@@ -115,10 +115,10 @@ type CloudFunctionController struct {
 	Tracer *ctrace.CompositeTracer
 }
 
-// Creates an instance of this service.
+// Creates an instance of this controller.
 // Parameters:
-//   - name	a service name to generate action cmd.
-func NewCloudFunctionService(name string) *CloudFunctionController {
+//   - name	a controller name to generate action cmd.
+func NewCloudFunctionController(name string) *CloudFunctionController {
 	c := CloudFunctionController{
 		name:               name,
 		actions:            make([]*CloudFunctionAction, 0),
