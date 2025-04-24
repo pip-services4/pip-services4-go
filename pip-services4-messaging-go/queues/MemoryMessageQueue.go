@@ -375,36 +375,55 @@ func (c *MemoryMessageQueue) MoveToDeadLetter(ctx context.Context, message *Mess
 //	see IMessageReceiver
 //	see Receive
 func (c *MemoryMessageQueue) Listen(ctx context.Context, receiver IMessageReceiver) error {
-	c.Logger.Trace(ctx, "", "Started listening messages at %s", c.String())
+	c.Logger.Trace(ctx, "Started listening messages at %s", c.String())
 
 	// Unset cancellation token
 	atomic.StoreInt32(&c.cancel, 0)
 
-	for atomic.LoadInt32(&c.cancel) == 0 {
-		message, err := c.Receive(ctx, time.Duration(1000)*time.Millisecond)
-		if err != nil {
-			c.Logger.Error(ctx, err, "Failed to receive the message")
-		}
+	ticker := time.NewTicker(time.Millisecond * 1000)
+	defer ticker.Stop()
 
-		if message != nil && atomic.LoadInt32(&c.cancel) == 0 {
-			// Todo: shall we recover after panic here??
-			func(message *MessageEnvelope) {
-				defer func() {
-					if r := recover(); r != nil {
-						err := fmt.Sprintf("%v", r)
-						c.Logger.Error(ctx, nil, "Failed to process the message - "+err)
-					}
-				}()
+	for {
+		select {
+		case <-ctx.Done():
+			// Context was cancelled or deadline exceeded
+			c.Logger.Trace(ctx, "Context cancelled, stopping message listener")
+			return ctx.Err() // Return the error from ctx (either cancellation or timeout)
 
-				err = receiver.ReceiveMessage(ctx, message, c)
+		case <-ticker.C:
+			// Checking the cancel flag
+			if atomic.LoadInt32(&c.cancel) == 1 {
+				c.Logger.Trace(ctx, "Cancellation flag set, stopping message listener")
+				return nil
+			}
+
+		default:
+			// Continue processing messages
+			if atomic.LoadInt32(&c.cancel) == 0 {
+				message, err := c.Receive(ctx, time.Duration(1000)*time.Millisecond)
 				if err != nil {
-					c.Logger.Error(ctx, err, "Failed to process the message")
+					c.Logger.Error(ctx, err, "Failed to receive the message")
 				}
-			}(message)
+
+				if message != nil && atomic.LoadInt32(&c.cancel) == 0 {
+					// Todo: shall we recover after panic here??
+					func(message *MessageEnvelope) {
+						defer func() {
+							if r := recover(); r != nil {
+								err := fmt.Sprintf("%v", r)
+								c.Logger.Error(ctx, nil, "Failed to process the message - "+err)
+							}
+						}()
+
+						err = receiver.ReceiveMessage(ctx, message, c)
+						if err != nil {
+							c.Logger.Error(ctx, err, "Failed to process the message")
+						}
+					}(message)
+				}
+			}
 		}
 	}
-
-	return nil
 }
 
 // EndListen method are ends listening for incoming messages.
