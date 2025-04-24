@@ -380,9 +380,6 @@ func (c *MemoryMessageQueue) Listen(ctx context.Context, receiver IMessageReceiv
 	// Unset cancellation token
 	atomic.StoreInt32(&c.cancel, 0)
 
-	ticker := time.NewTicker(time.Millisecond * 1000)
-	defer ticker.Stop()
-
 	for {
 		select {
 		case <-ctx.Done():
@@ -390,14 +387,13 @@ func (c *MemoryMessageQueue) Listen(ctx context.Context, receiver IMessageReceiv
 			c.Logger.Trace(ctx, "Context cancelled, stopping message listener")
 			return ctx.Err() // Return the error from ctx (either cancellation or timeout)
 
-		case <-ticker.C:
+		default:
 			// Checking the cancel flag
 			if atomic.LoadInt32(&c.cancel) == 1 {
 				c.Logger.Trace(ctx, "Cancellation flag set, stopping message listener")
 				return nil
 			}
 
-		default:
 			// Continue processing messages
 			if atomic.LoadInt32(&c.cancel) == 0 {
 				message, err := c.Receive(ctx, time.Duration(1000)*time.Millisecond)

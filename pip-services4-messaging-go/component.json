@@ -2,7 +2,7 @@
   "name": "pip-services4-messaging-go",
   "type": "module",
   "language": "go",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "build": 0,
   "registry": "pipservices",
   "artifacts": [
