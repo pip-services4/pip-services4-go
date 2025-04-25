@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"context"
+	"strings"
 
 	"strconv"
 	"time"
@@ -172,11 +173,12 @@ func (c *RedisCache[T]) Open(ctx context.Context) error {
 		options.Addr = host + ":" + port
 	}
 	if c.isCluster {
+		addrs := strings.Split(options.Addr, ";")
 		c.client = redis.NewClusterClient(&redis.ClusterOptions{
 			OnNewNode: func(client *redis.Client) {
 				client = redis.NewClient(&options)
 			},
-			Addrs:       append([]string{}, options.Addr),
+			Addrs:       addrs,
 			Password:    options.Password,
 			DialTimeout: options.DialTimeout,
 		})
