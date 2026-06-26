@@ -3,13 +3,13 @@ module github.com/pip-services4/pip-services4-go/pip-services4-memcached-go
 go 1.20
 
 require (
-	github.com/bradfitz/gomemcache v0.0.0-20230611145640-acc696258285
-	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230707031404-19c86e470df6
-	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.0-20230707031404-19c86e470df6
-	github.com/pip-services4/pip-services4-go/pip-services4-config-go v0.0.0-20230713224320-9f0c7ea76af6
-	github.com/pip-services4/pip-services4-go/pip-services4-logic-go v0.0.0-20230713224320-9f0c7ea76af6
-	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.0-20230713224320-9f0c7ea76af6
-	github.com/stretchr/testify v1.8.4
+	github.com/bradfitz/gomemcache v0.0.0-20260422231931-4d751bb6e37c
+	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.2-6
+	github.com/pip-services4/pip-services4-go/pip-services4-components-go v0.0.2-4
+	github.com/pip-services4/pip-services4-go/pip-services4-config-go v0.0.2-5
+	github.com/pip-services4/pip-services4-go/pip-services4-logic-go v0.0.3-6
+	github.com/pip-services4/pip-services4-go/pip-services4-observability-go v0.0.3-6
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
