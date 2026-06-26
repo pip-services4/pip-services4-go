@@ -3,8 +3,8 @@ module github.com/pip-services4/pip-services4-go/pip-services4-expressions-go
 go 1.20
 
 require (
-	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230619184138-fc6f24c4dfd6
-	github.com/stretchr/testify v1.8.4
+	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.2-5
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
