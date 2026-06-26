@@ -3,3 +3,6 @@
 ## <a name="0.0.1"></a>Pip.Services 4 0.0.1 (2023-06-21)
 Moved code from PipService 3
 
+## <a name="0.0.2"></a>Pip.Services 4 0.0.2 (2026-06-26)
+Updating Dependencies
+
