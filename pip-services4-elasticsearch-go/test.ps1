@@ -26,15 +26,15 @@ if (-not (Test-Path -Path "$PSScriptRoot/docker/id_rsa")) {
 
 try {
     # Workaround to remove dangling images
-    docker-compose -f "$PSScriptRoot/docker/docker-compose.test.yml" down
+    docker compose -f "$PSScriptRoot/docker/docker-compose.test.yml" down
 
-    docker-compose -f "$PSScriptRoot/docker/docker-compose.test.yml" up --build --abort-on-container-exit --exit-code-from test
+    docker compose -f "$PSScriptRoot/docker/docker-compose.test.yml" up --build --abort-on-container-exit --exit-code-from test
 
     # Save the result to avoid overwriting it with the "down" command below
     $exitCode = $LastExitCode 
 } finally {
     # Workaround to remove dangling images
-    docker-compose -f "$PSScriptRoot/docker/docker-compose.test.yml" down
+    docker compose -f "$PSScriptRoot/docker/docker-compose.test.yml" down
 }
 
 # Return the exit code of the "docker-compose.test.yml up" command

@@ -12,3 +12,6 @@ Initial public release
 * Supporting Elasticsearch 6.x and 7.x
 * **build** contains a factory for the construction of components
 * **log** Logging components
+
+## <a name="0.0.2"></a>Pip.Services 4 0.0.2 (2026-06-26)
+Updating Dependencies
