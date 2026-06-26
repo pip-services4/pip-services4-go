@@ -2,3 +2,6 @@
 
 ## <a name="0.0.1"></a>Pip.Services 4 0.0.1 (2023-06-20)
 Moved code from commons module in PipService 3
+
+## <a name="0.0.4"></a>Pip.Services 4 0.0.4 (2026-06-26)
+Updating Dependencies
