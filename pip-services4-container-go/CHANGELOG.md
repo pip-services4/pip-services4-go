@@ -6,3 +6,6 @@ Moved code from PipService 3
 ### Breaking Changes
 * Moved ContextInfo component from components module
 * Moved Shutdown component from components module
+
+## <a name="0.0.2"></a>Pip.Services 4 0.0.2 (2026-06-26)
+Updating Dependencies
