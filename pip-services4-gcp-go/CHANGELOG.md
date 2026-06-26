@@ -21,3 +21,6 @@ Initial public release
 - **container** - components for creating containers for Google server-side functions
 - **services** - contains interfaces and classes used to create Google services
 
+## <a name="1.1.1"></a>Pip.Services 4 1.1.1 (2026-06-26)
+Updating Dependencies
+
