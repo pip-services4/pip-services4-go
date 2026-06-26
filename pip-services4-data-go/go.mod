@@ -3,9 +3,9 @@ module github.com/pip-services4/pip-services4-go/pip-services4-data-go
 go 1.20
 
 require (
-	github.com/google/uuid v1.3.0
-	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.0-20230620183024-199067dc6611
-	github.com/stretchr/testify v1.8.4
+	github.com/google/uuid v1.6.0
+	github.com/pip-services4/pip-services4-go/pip-services4-commons-go v0.0.2-4
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
