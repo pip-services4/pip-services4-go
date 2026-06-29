@@ -27,3 +27,6 @@ Initial public release
 * **connect** instruments for configuring connections to the database
 * **persistence** abstract classes for working with the database
 
+## <a name="0.0.2"></a>Pip.Services 4 0.0.2 (2026-06-29)
+Updating Dependencies
+
