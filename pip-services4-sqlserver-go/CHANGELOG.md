@@ -12,5 +12,8 @@ Initial public release
 * Added SqlServerConnection
 * Added SqlServerPersistence
 
+## <a name="1.0.1"></a>Pip.Services 4 1.0.1 (2026-06-29)
+Updating Dependencies
+
 
 

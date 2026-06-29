@@ -9,7 +9,7 @@ import (
 	cctx "github.com/pip-services4/pip-services4-go/pip-services4-components-go/context"
 	cqueues "github.com/pip-services4/pip-services4-go/pip-services4-messaging-go/queues"
 	mqcon "github.com/pip-services4/pip-services4-go/pip-services4-rabbitmq-go/connect"
-	rabbitmq "github.com/streadway/amqp"
+	rabbitmq "github.com/rabbitmq/amqp091-go"
 )
 
 // Message queue that sends and receives messages via MQTT message broker.

@@ -3,3 +3,6 @@
 ## <a name="0.0.1"></a> 0.0.1 (2023-07-19) 
 Extracted from Components module from Pip.Services 3
 
+## <a name="0.0.3"></a>Pip.Services 4 0.0.3 (2026-06-29)
+Updating Dependencies
+

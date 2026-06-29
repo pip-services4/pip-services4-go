@@ -14,3 +14,6 @@ Initial public release
 * **info** Information components
 * **lock** Lock components
 * **log** Logging components
+
+## <a name="1.0.1"></a>Pip.Services 4 1.0.1 (2026-06-29)
+Updating Dependencies

@@ -6,3 +6,6 @@
 * **build** Factory for constructing module components
 * **connect** Components for creating and configuring a connection
 * **queues** Message Queuing components
+
+## <a name="0.0.2"></a>Pip.Services 4 0.0.2 (2026-06-29)
+Updating Dependencies
